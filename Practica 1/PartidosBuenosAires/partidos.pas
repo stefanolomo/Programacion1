@@ -21,6 +21,8 @@ begin
             writeln('Ingrese el numero de ciudades en el partido ', x, ': ');
             readln(CantCiud);
             {Preguntamos el numero de ciudades y las guardamos en una variable...}
+            TotalHab := 0;
+            {Limpiamos la variable TotalHab para volver a reutilizarla}
             for y := 1 to CantCiud do
                 {Para cada ciudad...}
                 begin
@@ -30,9 +32,11 @@ begin
                     TotalHab := TotalHab + HabCiud;
                     // writeln('En la ciudad ', y, ' del partido ', x, ' hay ', TotalHab, ' habitantes en el total');
                 end;
+                writeln('En el partido ', x, ' hay en promedio ', (TotalHab/CantCiud):2:2, ' habitantes.')
         end;
 
-    {Ahora calculamos la media y lo informamos}
-    writeln('En promedio hay ', (TotalHab/CANT_PART):2:2, ' habitantes por partido.');
+    // {Ahora calculamos la media y lo informamos}
+    writeln('');
+    writeln('Si tomamos todos los partidos en cuenta, en promedio hay ', (TotalHab/CANT_PART):2:2, ' habitantes por partido.');
 
 end.
