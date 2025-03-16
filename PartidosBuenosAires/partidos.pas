@@ -1,7 +1,7 @@
 Program PartidosBuenosAires;
 
 const
-CANT_PART = 135;
+CANT_PART = 3;
 
 var
 x,y: integer;
@@ -28,9 +28,11 @@ begin
                     writeln('Cuantos habitantes hay en la ciudad ', y, '?: ');
                     readln(HabCiud);
                     TotalHab := TotalHab + HabCiud;
+                    // writeln('En la ciudad ', y, ' del partido ', x, ' hay ', TotalHab, ' habitantes en el total');
                 end;
         end;
+
     {Ahora calculamos la media y lo informamos}
-    writeln('En promedio hay ', (TotalHab/CANT_PART):2:2, ' habitantes por partido.')
+    writeln('En promedio hay ', (TotalHab/CANT_PART):2:2, ' habitantes por partido.');
 
 end.
