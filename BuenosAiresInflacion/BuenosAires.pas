@@ -12,9 +12,11 @@ begin
             writeln('Ingrese la inflación del mes ', i, ': ');
             readln(Am[i]);
         end;
+
     {Inicializamos la variable max en un valor muy bajo para despues actualizarlo}
     mes := 1;
     max := -100;
+
     for i:=1 to 12 do
         {Para cada mes verificamos si la inflacion es mas que nuestro maximo y si es asi actualizamos la variable}
         begin
