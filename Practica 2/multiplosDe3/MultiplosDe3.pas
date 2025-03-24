@@ -1,10 +1,11 @@
 
 Program Multiplos;
 
-Var 
+var 
     digito, num:   integer;
 
 Begin
+    
     num := 0;
     writeln('Ingrese el numero a analizar: ');
     readln(num);
@@ -16,7 +17,7 @@ Begin
             if (digito mod 3 = 0) then
                 writeln(digito, ' es multiplo de 3')
                 // Si es múltiplo de 3, lo imprimimos
-                
+
             else if (digito mod 3 <> 0) then
                 writeln(digito, ' no es multiplo de 3');
             
