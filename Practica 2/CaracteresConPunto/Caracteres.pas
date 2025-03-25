@@ -1,16 +1,18 @@
+
 Program Caracteres;
 
-var
-    letra: char;
-    contador: integer;
+Var 
+    letra:   char;
+    contador:   integer;
 
-begin
+Begin
     contador := 0;
     writeln('Ingrese la secuencia de caracteres');
-    repeat
+
+    Repeat
         read(letra);
         contador := contador + 1;
-    until (letra = '.');
+    Until (letra = '.');
     writeln('La cantidad de caracteres leidos es de: ', contador - 1);
 
-end.
+End.
