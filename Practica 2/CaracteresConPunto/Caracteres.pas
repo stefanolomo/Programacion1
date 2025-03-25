@@ -11,7 +11,7 @@ Begin
 
     Repeat
         read(letra);
-        contador := contador + 1;
+        if (letra = 'E') then contador = contador + 1;
     Until (letra = '.');
     writeln('La cantidad de caracteres leidos es de: ', contador - 1);
 
