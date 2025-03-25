@@ -29,7 +29,7 @@ Begin
 
     Until (caracter = CORTADO) Or (contador = FINAL);
 
-    writeln('la cantidad de palabras encontradas fue de: ', totalPalabras);
+    writeln('la cantidad de palabras encontradas fue de: ', totalPalabras + 1);
     writeln('la cantidad de caracteres procesados fue de: ', contador);
     writeln('Esta en palabra: ', enPalabra);
 End.
