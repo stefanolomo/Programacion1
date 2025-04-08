@@ -10,6 +10,8 @@ Var
 
 // A. Implemente con una función. B. Implemente la función Max, que recibe 2 enteros y retorna el mayor, y re-implemente la función de A. utilizando Max. C. Compare y reflexione acerca de las implementaciones de a) y b). Piense en la modularización, la expresividad y la legibilidad
 
+// C. La implementación con la modularización que permite la función maximoEntreDos mejora mucho la legibilidad!
+
 Function maximoEntreDos(entero1: integer; entero2: integer):   integer;
 
 Var 
