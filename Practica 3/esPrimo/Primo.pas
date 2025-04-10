@@ -1,7 +1,7 @@
 Program Primo;
 
 Var 
-    digito:   integer;
+    nro:   integer;
 
 // Implemente un módulo que reciba un número y retorne verdadero si todos sus dígitos son primos.
 
@@ -9,25 +9,49 @@ Var
 
 // B. Utilice este módulo auxiliar para verificar si todos los dígitos del número ingresado son primos
 
-Function EsPrimo(digito: integer):   Boolean;
+Function EsPrimoDigito (digito: integer):   Boolean;
 
 Begin
-    If (Not (digito < 0)) Or (Not (digito > 9)) Then
+    If (Not (digito < 0)) And (Not (digito > 9)) Then
         Begin
             Case digito Of 
-                2, 3, 5, 7:   EsPrimo := True;
+                2, 3, 5, 7:   EsPrimoDigito := True;
 
-                Else EsPrimo := False;
+                Else EsPrimoDigito := False;
             End;
             
         End;
 End;
 
+function EsPrimoNro (nro: integer):boolean;
+
+var
+    digito: integer;
+
+begin
+    while (nro <> 0) do
+        begin
+            digito := nro mod 10;
+
+            if not (EsPrimoDigito(digito)) then
+                begin
+                    EsPrimoNro := False;
+                    Exit;
+                end; 
+
+            nro := nro div 10;
+        end;
+    
+    EsPrimoNro := True;
+    
+end;
+
 Begin
-    writeln('Ingrese el digito a procesar');
-    readln(digito);
+    writeln('Ingrese el nro a procesar');
+    readln(nro);
 
-    if (EsPrimo(digito)) then writeln('El nro es primo')
-    else writeln('El nro no es primo');
+    if (EsPrimoNro(nro)) then writeln('El nro tiene todos sus digitos primos')
+    else writeln('El nro tiene al menos un digito no primo');
 
+    
 End.
