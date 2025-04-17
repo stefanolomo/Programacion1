@@ -73,6 +73,29 @@ begin
     contarEnRango := suma;
 end;
 
+// Busca los dos menores valores del vector. [Solo funciona si los valores son menores a 999999 y si el vector tiene al menos 2 elementos]
+procedure dosMinEnVector(mV: Vector; var min1: integer; var min2: integer);
+
+var
+    valor, i: integer;
+
+begin
+    min1 := 999999;
+    min2 := 999999;
+
+    for i := 1 to mV.DimL do
+        begin
+            valor := mV.V[i];
+
+            if (valor < min1) then
+                begin
+                    min2 := min1;
+                    min1 := valor;
+                end
+            else if (valor < min2) then min2 := valor;
+        end;
+end;
+
 begin
     
 end.
