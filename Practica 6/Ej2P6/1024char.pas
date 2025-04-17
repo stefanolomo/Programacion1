@@ -7,6 +7,7 @@ const
     MINUS = ['a'..'z'];
     CONMAYUS = ['A'..'Z'] - ['A', 'E', 'I', 'O', 'U'];
     CONMINUS = ['a'..'z'] - ['a', 'e', 'i', 'o', 'u'];
+    CORTE: '.';
 
 type
     Vector = record
@@ -26,13 +27,27 @@ procedure CargarCaracteres(var mV: Vector);
 
 var
     i: integer;
+    caracter: char;
+    continuar: boolean;
 
 begin
-    for i := 1 to DimF do
+    i := 1;
+    continuar := True;
+
+    while (i <= DimF) and (continuar) do
         begin
-            read(mV.V[i]);
+            read(caracter);
+
+            if(caracter = CORTE) then continuar := False
+            else
+                begin
+                    mV.V[i] := caracter;
+                    i := i + 1;
+                end;
         end;
-    mV.DimL := DimF;
+    
+    if (i = DimF) then mV.DimL := i
+    else mV.DimL := i - 1;
 end;
 
 // La cantidad y porcentaje de consonantes sobre el total de caracteres alfabéticos
