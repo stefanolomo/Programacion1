@@ -70,7 +70,7 @@ begin
                 end;
 
         end;
-    perteneceA := suma;
+    contarEnRango := suma;
 end;
 
 begin
