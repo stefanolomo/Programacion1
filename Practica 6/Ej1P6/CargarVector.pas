@@ -25,7 +25,7 @@ end;
 
 
 // Procedimiento para sacar el promedio de los valores de un vector y el % de nros positivos y negativos que lo componen. (Se tiene en cuenta al 0 como un numero positivo)
-procedure PromedioPosNeg(var mV: Vector; var porPos: real; var porNeg: real; var promedio: real);
+procedure PromedioPosNeg(mV: Vector; var porPos: real; var porNeg: real; var promedio: real);
 
 var
     valor, i: integer;
@@ -49,6 +49,28 @@ begin
     porPos := (contPos / mV.DimL) * 100;
     porNeg := (contNeg / mV.DimL) * 100;
     promedio := (suma / mV.DimL) * 100;
+end;
+
+// Recive un vectos junto con los limites superiores e inferiores de un rango, para cada elemento del vector, cuenta cuantos elementos estan en el rango dado.
+function contarEnRango(mV: Vector; limInf: integer; limSup: integer):integer;
+
+var
+    i, valor: integer;
+    suma: integer;
+
+begin
+    suma := 0;
+    for i := 1 to mV.DimL do
+        begin
+            valor := mV.V[i];
+            
+            if (valor > limInf) and (valor < limSup) then
+                begin
+                    suma := suma + 1;
+                end;
+
+        end;
+    perteneceA := suma;
 end;
 
 begin
