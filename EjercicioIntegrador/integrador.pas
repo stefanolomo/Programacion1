@@ -75,11 +75,51 @@ begin
     CheckParteA := (contAlfabetico >= 2) and (contDigito >= 2) and (excluyenteAlfaNumerico);
 end;
 
-//b) Módulo 2 (Parte B): Secuencia de 5 dígitos ordenados en secuencia de menor a mayor que no estén en la Parte A.
+// b) Módulo 2 (Parte B): Secuencia de 5 dígitos ordenados de menor a mayor que no estén en la Parte A.
 
-function CheckParteA(secuencia: string[5]):boolean;
+// Procedimientos para extraer digitos que hay en una secuencia y volcarlos a un conjunto
+procedure ExtraerDigitos(secuencia: string[6]; var digitos: set of char);
+
+var
+    i: integer;
+    caracter: char;
+
 begin
-    if ()
+    digitos := [];
+
+    for i := 1 to 6 do
+        begin
+            caracter := secuencia[i];
+            if (caracter in ['0'..'9']) then
+                begin
+                    digitos := digitos + [caracter];
+                end;
+        end;
+end;
+
+function CheckParteB(secuencia: string[5]; secuenciaParteA: string[6]):boolean;
+
+var
+    digitosParteA: set of char;
+    i: integer;
+    caracter, comparador: char;
+
+begin
+    ExtraerDigitos(secuenciaParteA, digitosParteA);
+
+    comparador := '0';
+    
+    for i := 1 to 5 do
+        begin
+            caracter := secuencia[i];
+
+            if not (caracter in ['0'..'9']) then CheckParteB := False
+            else if (caracter in digitosParteA) then CheckParteB := False
+            else if (caracter <= comparador) then CheckParteB := False
+            else comparador := caracter;
+        end;
+        
+    CheckParteB := True;
 end;
 
 // c) Módulo 3 (Parte C): Secuencia de 7 dígitos o letras que contengan el carácter 'A' seguido de 'B'. En el caso de tener dígitos, estos no deben estar en la Parte A.
