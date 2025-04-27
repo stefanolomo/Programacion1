@@ -43,6 +43,7 @@ End;
 // a) Módulo 1 (Parte A): Secuencia de 6 caracteres que deben ser letras mayúsculas y números, con al menos 2 de cada uno (ej. si tiene 5 mayúsculas y 1 número no se cumpliría la Parte A de la secuencia).
 
 function CheckParteA(secuencia: array[1..6] of char):boolean;
+
 begin
     
 end;
@@ -50,9 +51,13 @@ end;
 // b) Módulo 2 (Parte B): Secuencia de 5 dígitos ordenados de menor a mayor que no estén en la Parte A.
 
 // Procedimientos para extraer digitos que hay en una secuencia y volcarlos a un conjunto
-procedure ExtraerDigitosParteA(secuencia: array[1..6] of char);
+procedure ExtraerDigitosParteA(secuencia: array[1..6] of char; var conjunto: set of char);
 begin
-    
+    for i := 1  to 6 do
+        begin
+            caracter := secuencia[i];
+            conjunto := conjunto + [caracter];
+        end;
 end;
 
 function CheckParteB(secuencia: array[1..5] of char):boolean;
