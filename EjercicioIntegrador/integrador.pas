@@ -5,6 +5,15 @@ const
     ALFABETOMINUS = ['a'..'z'];
     DIGITOS_CHAR = ['0'..'9'];
     DIGITOS_INT = [0..9];
+    DimF5 = 5;
+    DimF6 = 6;
+    DimF7 = 7;
+
+type
+    Vector5 = record
+        V: array[1..DimF5] of char;
+        DimL: [1..5];
+    end;
 
 // 1. Validación de ID del robot: Implementar un módulo que valide el ID del robot. Para ello desarrolle un módulo cuya tarea sea descomponer un número que recibe como parámetro y retorne la suma de sus dígitos. Un ID del robot es válido si la suma de sus dígitos es mayor que la suma de los dígitos del ID del fabricante
 
@@ -47,7 +56,7 @@ end;
 
 // a) Módulo 1 (Parte A): Secuencia de 6 caracteres que deben ser letras mayúsculas y números, con al menos 2 de cada uno (ej. si tiene 5 mayúsculas y 1 número no se cumpliría la Parte A de la secuencia).
 
-function CheckParteA(secuencia: string[6]):boolean;
+function CheckParteA(secuencia: avecrray[6]):boolean;
 
 var
     i, contAlfabetico, contDigito: integer;
