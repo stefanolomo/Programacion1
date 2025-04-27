@@ -56,7 +56,7 @@ end;
 
 // a) Módulo 1 (Parte A): Secuencia de 6 caracteres que deben ser letras mayúsculas y números, con al menos 2 de cada uno (ej. si tiene 5 mayúsculas y 1 número no se cumpliría la Parte A de la secuencia).
 
-function CheckParteA(secuencia: avecrray[6]):boolean;
+function CheckParteA(secuencia: string[6]):boolean;
 
 var
     i, contAlfabetico, contDigito: integer;
