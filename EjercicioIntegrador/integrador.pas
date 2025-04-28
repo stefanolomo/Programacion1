@@ -9,12 +9,63 @@ Const
 
 Type 
     ConjuntoChar =   set Of char;
+    cadena20 = string[20];
 
     VectorCodigo =   Record
         V:   array[1..7] Of char;
         DimL:   integer;
         DimF:   integer;
     End;
+
+    VectorFabricante =   Record
+        Fabricantes:   array[1..20] Of cadena20;
+        Antiguedad: array[1..20] Of integer;
+        DimL:   integer;
+        DimF:   integer;
+    End;
+
+// 3. Verificación de fabricante habilitado: Implemente un módulo que reciba el arreglo de fabricantes, el nombre del fabricante del robot y un valor mínimo de años de antigüedad requerido. Determine si el fabricante está en el arreglo y si cumple con el mínimo de años de antigüedad. Utilice búsqueda dicotomica.
+
+function VerificarFabricante(ArregloFabricantes: VectorFabricante; NombreFabricante: cadena20; MinimoAntiguedad: integer):boolean;
+
+var
+    EstaEnArreglo, CumpleAntiguedad, Encontrado: boolean;
+    sup, inf, med: integer;
+begin
+    // Se incicializa las condiciones en False
+    EstaEnArreglo := False;
+    CumpleAntiguedad := False;
+    Encontrado := False;
+
+    // Limites para la busqueda dicotómica
+    sup := ArregloFabricantes.DimL;
+    inf := 1;
+
+    while (sup >= inf) and not Encontrado do
+        begin
+            // Calcular el punto medio
+            med := (sup + inf) div 2;
+
+            // Si esta en el medio, lo encontramos
+            if (ArregloFabricantes.Fabricantes[med] = NombreFabricante) then
+                begin
+                    // Esta en el arreglo
+                    EstaEnArreglo := True;
+                    
+                    if (ArregloFabricantes.Antiguedad[med] >= MinimoAntiguedad) then CumpleAntiguedad := True; // Cumple la antiguedad
+
+                    // Encontramos el fabricante cumpla la antiguedad o no
+                    Encontrado := True;
+                end
+            // Si el elemento del medio es mayor al que buscamos,     
+            else if (ArregloFabricantes.Fabricantes[med] > NombreFabricante) then sup := med - 1
+            // Si el nombre en la posición media es menor, ajustamos inf
+            else
+               inf := med + 1;
+            end;
+        
+    VerificarFabricante := EstaEnArreglo and CumpleAntiguedad;
+end;
 
 Procedure CargarVector(Var Vector: VectorCodigo; max: integer);
 
@@ -203,6 +254,7 @@ Begin
     // El conjunto lo pone vacio y el i en 1
     conjuntoParteA := [];
     i := 1;
+    anterior := 'A';
 
     // Suponemos que es valido
     Esvalido := True;
@@ -243,7 +295,6 @@ End;
 
 Var 
     secuenciaA, secuenciaB:   VectorCodigo;
-    r:   integer;
 Begin
     // Lee hasta 6 caracteres para la parte A
     writeln(
