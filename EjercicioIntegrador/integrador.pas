@@ -28,7 +28,7 @@ Begin
         Begin
             read(caracter);
 
-            // Ignorar Enter
+            // Ignorar Enter y otros caracteres que no son de interes
             If (caracter In ALFABETOMAYUS) Or (caracter In ALFABETOMINUS) Or (
                caracter In DIGITOS_CHAR) Then
                 Begin
@@ -192,13 +192,49 @@ End;
 // c) Módulo 3 (Parte C): Secuencia de 7 dígitos o letras que contengan el carácter 'A' seguido de 'B'. En el caso de tener dígitos, estos no deben estar en la Parte A.
 
 Function CheckParteC(secuencia: Vector; secuenciaParteA: Vector):   boolean;
-Begin
 
+var
+    conjuntoParteA:   ConjuntoChar;
+    caracter, anterior: char;
+    i: integer;
+    Esvalido, encontreAB: boolean;
+    
+Begin
+    // El conjunto lo pone vacio y el i en 1
+    conjuntoParteA := [];
+    i := 1;
+
+    // Suponemos que es valido
+    Esvalido := True;
+
+    // Extramos los digitos de la parte A a un conjunto
+    ExtraerDigitosParteA(secuenciaParteA, conjuntoParteA);
+
+    // De 1 a la dimension logica mientras sea valido
+    while (i <= secuencia.DimL) and EsValido do
+    begin
+        // Extraemos el caracter a procesar
+        caracter := secuencia.V[i];
+
+        // Validar caracteres permitidos: Si no es una letra mayusucla, minuscula o digito que no esta en el conjunto de digitos de A entonce es invalido
+        if not ((caracter in ALFABETOMAYUS) or (caracter in ALFABETOMINUS) or ((caracter in DIGITOS_CHAR) and not (caracter in conjuntoParteA))) then Esvalido := False;
+
+        // Detectar si aparece una A seguida de una B mientras que no sea el primer caracter leido
+        if (i > 1) and (anterior = 'A') and (caracter = 'B') then
+            encontreAB := True;
+
+        anterior := caracter;
+        i := i + 1;
+    end;
+
+    // Si cumple los dos patrones, pasa el check
+    CheckParteC := Esvalido and encontreAB;
 End;
 
 Function CodigoValido(ArrParteA: Vector; ArrParteB: Vector;
                       ArrParteC: Vector):   boolean;
 Begin
+    // Devuelve True solo si todos los checks son aprobados
     CodigoValido := CheckParteA(ArrParteA) And CheckParteB(ArrParteB, ArrParteA)
                     And CheckParteC(ArrParteC, ArrParteA);
 End;
