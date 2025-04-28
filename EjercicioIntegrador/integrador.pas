@@ -10,13 +10,13 @@ Const
 Type 
     ConjuntoChar =   set Of char;
 
-    Vector =   Record
+    VectorCodigo =   Record
         V:   array[1..7] Of char;
         DimL:   integer;
         DimF:   integer;
     End;
 
-Procedure CargarVector(Var Vector: Vector; max: integer);
+Procedure CargarVector(Var Vector: VectorCodigo; max: integer);
 
 Var 
     i:   integer;
@@ -78,7 +78,7 @@ End;
 
 // a) Módulo 1 (Parte A): Secuencia de 6 caracteres que deben ser letras mayúsculas y números, con al menos 2 de cada uno (ej. si tiene 5 mayúsculas y 1 número no se cumpliría la Parte A de la secuencia).
 
-Function CheckParteA(secuencia: Vector):   boolean;
+Function CheckParteA(secuencia: VectorCodigo):   boolean;
 
 Var 
     contadorLetras, contadorNum:   integer;
@@ -128,7 +128,7 @@ End;
 
 
 // Procedimientos para extraer digitos que hay en una secuencia y volcarlos a un conjunto
-Procedure ExtraerDigitosParteA(secuencia: Vector; Var conjunto:
+Procedure ExtraerDigitosParteA(secuencia: VectorCodigo; Var conjunto:
                                ConjuntoChar);
 
 Var 
@@ -145,7 +145,7 @@ Begin
         End;
 End;
 
-Function CheckParteB(secuencia: Vector; secuenciaParteA: Vector):   boolean;
+Function CheckParteB(secuencia: VectorCodigo; secuenciaParteA: VectorCodigo):   boolean;
 
 Var 
     i:   integer;
@@ -191,7 +191,7 @@ End;
 
 // c) Módulo 3 (Parte C): Secuencia de 7 dígitos o letras que contengan el carácter 'A' seguido de 'B'. En el caso de tener dígitos, estos no deben estar en la Parte A.
 
-Function CheckParteC(secuencia: Vector; secuenciaParteA: Vector):   boolean;
+Function CheckParteC(secuencia: VectorCodigo; secuenciaParteA: VectorCodigo):   boolean;
 
 var
     conjuntoParteA:   ConjuntoChar;
@@ -231,8 +231,8 @@ Begin
     CheckParteC := Esvalido and encontreAB;
 End;
 
-Function CodigoValido(ArrParteA: Vector; ArrParteB: Vector;
-                      ArrParteC: Vector):   boolean;
+Function CodigoValido(ArrParteA: VectorCodigo; ArrParteB: VectorCodigo;
+                      ArrParteC: VectorCodigo):   boolean;
 Begin
     // Devuelve True solo si todos los checks son aprobados
     CodigoValido := CheckParteA(ArrParteA) And CheckParteB(ArrParteB, ArrParteA)
@@ -242,7 +242,7 @@ End;
 // Programa Principal
 
 Var 
-    secuenciaA, secuenciaB:   Vector;
+    secuenciaA, secuenciaB:   VectorCodigo;
     r:   integer;
 Begin
     // Lee hasta 6 caracteres para la parte A
@@ -253,9 +253,6 @@ Begin
     secuenciaA.DimF := 6;
 
     CargarVector(secuenciaA, 6);
-
-    For r := 1 To secuenciaA.DimF Do
-        writeln (secuenciaA.V[r]);
 
     If (CheckParteA(secuenciaA)) Then
         writeln('Parte A válida')
@@ -271,9 +268,6 @@ Begin
     secuenciaB.DimF := 5;
 
     CargarVector(secuenciaB, 5);
-
-    For r := 1 To secuenciaB.DimF Do
-        writeln (secuenciaB.V[r]);
 
     If (CheckParteB(secuenciaB, secuenciaA)) Then
         writeln('Parte B válida')
