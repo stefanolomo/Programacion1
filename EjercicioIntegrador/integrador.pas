@@ -83,7 +83,6 @@ Begin
         // Si el caracter no es una letra mayuscula ni un digito, no cumple el patrón
         if (not (caracter in ALFABETOMAYUS)) and (not (caracter in DIGITOS_CHAR)) then
         begin
-            writeln('Se encontró el caracter ', caracter, ' que no es ni una letra mayúscula ni un dígito.');
             esValido := False;  // Marcamos como inválido
         end;
 
