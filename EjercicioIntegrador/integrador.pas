@@ -133,24 +133,34 @@ Var
     conjuntoParteA: ConjuntoChar;
     EsValido: boolean;
 Begin
+    // El conjunto lo pone vacio
     conjuntoParteA := [];
+
+    // Extrae los digitos de la parte A
     ExtraerDigitosParteA(secuenciaParteA, conjuntoParteA);
 
+    // Suponemos que la secuencia es valida por defecto y i empieza en 1
     EsValido := True;
     i := 1;
-    
+
+    // Mientras desde i hasta la dimension logica y mientras sea valido (para cortar cuando deje de serlo)
     while (i <= secuencia.DimL) and EsValido do
     begin
+        // Extraemos el caracter a analizar
         caracter := secuencia.V[i];
 
+        // Si no es un digitol o esta en los de la parte A, es invalido
         if (not (caracter in DIGITOS_CHAR)) or (caracter in conjuntoParteA) then
             EsValido := False
+        // Y si es menor al anterior tambien es inválido
         else if (i > 1) and (caracter < secuencia.V[i-1]) then
             EsValido := False
+        // Si no pasa nada, esta bien y le sumamos al contador
         else
             i := i + 1;
     end;
 
+    // El resultado es si es valido
     CheckParteB := EsValido;
 End;
 
