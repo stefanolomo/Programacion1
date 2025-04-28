@@ -15,21 +15,26 @@ Type
         DimF:   integer;
     End;
 
-Procedure CargarVector(Var Vector: Vector; max: integer);
-Var 
-    i:   integer;
-Begin
-    Vector.DimL := 0;  // Asegúrate de inicializar DimL
-    If (max <= Vector.DimF) And (max > 0) Then
-        Begin
-            For i := 1 To max Do
-                Begin
-                    read(Vector.V[i]);
-                    Vector.DimL := Vector.DimL + 1;
-                End;
-        End
-    else writeln('>>Error en la carga del vector!<<');
-End;
+Procedure CargarVector(var Vector: Vector; max: integer);
+var
+    i: integer;
+    caracter: char;
+begin
+    i := 1;
+    
+    while (i <= max) do
+    begin
+        read(caracter);
+        
+        // Ignorar Enter
+        if (caracter in ALFABETOMAYUS) or (caracter in ALFABETOMINUS) or (caracter in DIGITOS_CHAR) then
+        begin
+            Vector.V[i] := caracter;
+            Vector.DimL := i;  // actualizar DimL
+            i := i + 1;
+        end;
+    end;
+end;
 
 // 1. Validación de ID del robot: Implementar un módulo que valide el ID del robot. Para ello desarrolle un módulo cuya tarea sea descomponer un número que recibe como parámetro y retorne la suma de sus dígitos. Un ID del robot es válido si la suma de sus dígitos es mayor que la suma de los dígitos del ID del fabricante
 
@@ -116,7 +121,8 @@ Begin
     For i := 1 To 6 Do
         Begin
             caracter := secuencia.V[i];
-            if (caracter in DIGITOS_CHAR) then conjunto := conjunto + [caracter];
+            if (caracter in DIGITOS_CHAR) then
+                conjunto := conjunto + [caracter];
         End;
 End;
 
@@ -125,26 +131,29 @@ Var
     i: integer;
     caracter: char;
     conjuntoParteA: ConjuntoChar;
+    EsValido: boolean;
 Begin
     conjuntoParteA := [];
-
     ExtraerDigitosParteA(secuenciaParteA, conjuntoParteA);
+
+    EsValido := True;
+    i := 1;
     
-    for i := 1 to secuencia.DimL do
-        begin
-            caracter := secuencia.V[i];
+    while (i <= secuencia.DimL) and EsValido do
+    begin
+        caracter := secuencia.V[i];
 
-            // Si el caracter no es un digito o está en los de la parte A, no cumple el patron
-            if (not (caracter in DIGITOS_CHAR)) or (caracter in conjuntoParteA) then
-                CheckParteB := False;
+        if (not (caracter in DIGITOS_CHAR)) or (caracter in conjuntoParteA) then
+            EsValido := False
+        else if (i > 1) and (caracter < secuencia.V[i-1]) then
+            EsValido := False
+        else
+            i := i + 1;
+    end;
 
-            if (i > 1) and (caracter < secuencia.V[i-1]) then
-                CheckParteB := False;
-        end;
-
-    // Si pasó todas las comprobaciones, es válido
-    CheckParteB := True;
+    CheckParteB := EsValido;
 End;
+
 
 // c) Módulo 3 (Parte C): Secuencia de 7 dígitos o letras que contengan el carácter 'A' seguido de 'B'. En el caso de tener dígitos, estos no deben estar en la Parte A.
 
@@ -168,7 +177,6 @@ Begin
     writeln('Ingrese 6 caracteres para la secuencia A (letras mayúsculas o números):');
     
     secuenciaA.DimF := 6;
-    secuenciaA.DimL := 0;
 
     CargarVector(secuenciaA, 6); 
 
@@ -183,7 +191,6 @@ Begin
     
     writeln('Ingrese 5 caracteres para la secuencia B (digitos de menor a mayor que no esten en parte A):');
     
-    secuenciaB.DimL := 0;
     secuenciaB.DimF := 5;
 
     CargarVector(secuenciaB, 5);
