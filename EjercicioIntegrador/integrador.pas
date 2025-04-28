@@ -161,13 +161,14 @@ End;
 
 // Programa Principal
 var
-    secuenciaA: Vector;
+    secuenciaA, secuenciaB: Vector;
     r: integer;
 Begin
     // Lee hasta 6 caracteres para la parte A
     writeln('Ingrese 6 caracteres para la secuencia A (letras mayúsculas o números):');
     
     secuenciaA.DimF := 6;
+    secuenciaA.DimL := 0;
 
     CargarVector(secuenciaA, 6); 
 
@@ -177,4 +178,20 @@ Begin
         writeln('Parte A válida')
     else
         writeln('Parte A inválida');
+
+    // Lee hasta 5 caracteres para la parte B
+    
+    writeln('Ingrese 5 caracteres para la secuencia B (digitos de menor a mayor que no esten en parte A):');
+    
+    secuenciaB.DimL := 0;
+    secuenciaB.DimF := 5;
+
+    CargarVector(secuenciaB, 5);
+
+    for r := 1 to secuenciaB.DimF do writeln (secuenciaB.V[r]);
+
+    if (CheckParteB(secuenciaB, secuenciaA)) then
+        writeln('Parte B válida')
+    else
+        writeln('Parte B inválida');
 End.
