@@ -6,10 +6,11 @@ Const
     ALFABETOMINUS =   ['a'..'z'];
     DIGITOS_CHAR =   ['0'..'9'];
     DIGITOS_INT =   [0..9];
-
+    MAX_FABRICANTES = 30;
+    
 Type 
     ConjuntoChar =   set Of char;
-    cadena20 = string[20];
+    cadena70 = string[70];
 
     VectorCodigo =   Record
         V:   array[1..7] Of char;
@@ -17,55 +18,92 @@ Type
         DimF:   integer;
     End;
 
-    VectorFabricante =   Record
-        Fabricantes:   array[1..20] Of cadena20;
-        Antiguedad: array[1..20] Of integer;
-        DimL:   integer;
-        DimF:   integer;
+    TFabricante = record
+        nombre: string[70];
+        antiguedad: integer;
     End;
+
+    TFabricantes = array[1..MAX_FABRICANTES] of TFabricante;
+Const
+    FABRICANTES: TFabricantes = (
+(nombre: 'AI Creators'; antiguedad: 9),
+(nombre: 'AI Dynamics'; antiguedad: 12),
+(nombre: 'AI Innovators'; antiguedad: 4),
+(nombre: 'AI Pioneers'; antiguedad: 9),
+(nombre: 'AutoGenius'; antiguedad: 11),
+(nombre: 'AutoMech'; antiguedad: 14),
+(nombre: 'CyberAndroids'; antiguedad: 7),
+(nombre: 'CyberWorks'; antiguedad: 10),
+(nombre: 'EvoBots'; antiguedad: 7),
+(nombre: 'EvoMech'; antiguedad: 8),
+(nombre: 'FutureBots'; antiguedad: 10),
+(nombre: 'FutureMinds'; antiguedad: 5),
+(nombre: 'MechSolutions'; antiguedad: 12),
+(nombre: 'NanoBots Co.'; antiguedad: 6),
+(nombre: 'NanoMinds'; antiguedad: 7),
+(nombre: 'NeuraBotics'; antiguedad: 8),
+(nombre: 'NextGen Androids'; antiguedad: 6),
+(nombre: 'NextGen Robotics'; antiguedad: 3),
+(nombre: 'Quantum Robotics'; antiguedad: 5),
+(nombre: 'QuantumAndroids'; antiguedad: 4),
+(nombre: 'RoboGenius'; antiguedad: 13),
+(nombre: 'RoboInnovators'; antiguedad: 3),
+(nombre: 'RoboMasters'; antiguedad: 6),
+(nombre: 'RoboTech Inc.'; antiguedad: 15),
+(nombre: 'SmartAndroids'; antiguedad: 8),
+(nombre: 'SmartBots'; antiguedad: 5),
+(nombre: 'SynthMind'; antiguedad: 9),
+(nombre: 'SynthTech'; antiguedad: 8),
+(nombre: 'TechHumanoid'; antiguedad: 11),
+(nombre: 'TechPioneers'; antiguedad: 10)
+);
 
 // 3. Verificación de fabricante habilitado: Implemente un módulo que reciba el arreglo de fabricantes, el nombre del fabricante del robot y un valor mínimo de años de antigüedad requerido. Determine si el fabricante está en el arreglo y si cumple con el mínimo de años de antigüedad. Utilice búsqueda dicotomica.
 
-function VerificarFabricante(ArregloFabricantes: VectorFabricante; NombreFabricante: cadena20; MinimoAntiguedad: integer):boolean;
-
+function VerificarFabricante(ArregloFabricantes: TFabricantes; NombreFabricante: cadena70; MinimoAntiguedad: integer): boolean;
 var
     EstaEnArreglo, CumpleAntiguedad, Encontrado: boolean;
     sup, inf, med: integer;
 begin
-    // Se incicializa las condiciones en False
+    // Se inicializan las condiciones en False
     EstaEnArreglo := False;
     CumpleAntiguedad := False;
     Encontrado := False;
 
-    // Limites para la busqueda dicotómica
-    sup := ArregloFabricantes.DimL;
+    // Límites para la búsqueda dicotómica
+    sup := MAX_FABRICANTES;
     inf := 1;
 
     while (sup >= inf) and not Encontrado do
+    begin
+        // Calcular el punto medio
+        med := (sup + inf) div 2;
+
+        // Si está en el medio, lo encontramos
+        if (ArregloFabricantes[med].nombre = NombreFabricante) then
         begin
-            // Calcular el punto medio
-            med := (sup + inf) div 2;
+            // Está en el arreglo
+            EstaEnArreglo := True;
+            
+            // Verificar si cumple la antigüedad
+            if (ArregloFabricantes[med].antiguedad >= MinimoAntiguedad) then
+                CumpleAntiguedad := True;
 
-            // Si esta en el medio, lo encontramos
-            if (ArregloFabricantes.Fabricantes[med] = NombreFabricante) then
-                begin
-                    // Esta en el arreglo
-                    EstaEnArreglo := True;
-                    
-                    if (ArregloFabricantes.Antiguedad[med] >= MinimoAntiguedad) then CumpleAntiguedad := True; // Cumple la antiguedad
-
-                    // Encontramos el fabricante cumpla la antiguedad o no
-                    Encontrado := True;
-                end
-            // Si el elemento del medio es mayor al que buscamos,     
-            else if (ArregloFabricantes.Fabricantes[med] > NombreFabricante) then sup := med - 1
-            // Si el nombre en la posición media es menor, ajustamos inf
-            else
-               inf := med + 1;
-            end;
+            // Encontramos el fabricante, cumpla o no la antigüedad
+            Encontrado := True;
+        end
+        // Si el nombre en la posición media es mayor al que buscamos
+        else if (ArregloFabricantes[med].nombre > NombreFabricante) then
+            sup := med - 1
+        // Si el nombre en la posición media es menor, ajustamos inf
+        else
+            inf := med + 1;
+    end;
         
+    // Devuelve True si está en el arreglo y cumple la antigüedad
     VerificarFabricante := EstaEnArreglo and CumpleAntiguedad;
 end;
+
 
 Procedure CargarVector(Var Vector: VectorCodigo; max: integer);
 
