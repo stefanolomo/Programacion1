@@ -360,6 +360,56 @@ Begin
     CodigoValido := CheckParteA(secuenciaA) and CheckParteB(secuenciaB, secuenciaA) and CheckParteC(secuenciaC, secuenciaA);
 End;
 
+function VerificarFabricante(FABRICANTES: TFabricantes; NombreFabricante: cadena70; AntiguedadMin: integer):Boolean;
+
+var
+    m, d, i: integer;
+    Encontrado, CumpleAntiguedad: Boolean;
+
+begin
+    // Asumimos que ambas condiciones son falsas
+    Encontrado := False;
+    CumpleAntiguedad := False;
+
+    // La parte derecha va a ser el final, o el maximo
+    d := MAX_FABRICANTES;
+    // La parte izquierda va a ser el primero o 1
+    i := 1;
+
+    // Mientras la izquierda sea igual o menor a la derecha, lo que siempre se debería cumplir
+    while (i <= d) and (not Encontrado) do
+        begin
+            // El medio es la mitad de la izquierda a la derecha
+            m := (i + d) div 2;
+
+            // Si el del medio es el que buscamos
+            if (FABRICANTES[m].nombre = NombreFabricante) then
+                begin
+                    // Verificamos si cumple la antiguedad
+                    CumpleAntiguedad := FABRICANTES[m].antiguedad >= AntiguedadMin;
+                    // Decimos que lo encontramos
+                    Encontrado := True;
+                end
+            // O esta a la derecha, osea que es mayor al del medio
+            else if (NombreFabricante > FABRICANTES[m].nombre) then
+                begin
+                    // La izquierda es el medio y la derecha sigue siendo el final
+                    i := m + 1;
+
+                end
+            // O esta a la izquierda, osea que es menor al del medio
+            else if (NombreFabricante < FABRICANTES[m].nombre) then
+                begin
+                    // La derecha es el medio y la izquierda no cambia
+                    d := m - 1;
+                end;
+            // writeln(FABRICANTES[i].nombre);
+            // writeln(FABRICANTES[i].antiguedad);
+        end;
+
+    VerificarFabricante := Encontrado and CumpleAntiguedad;
+end;
+
 Begin
-    
+
 End.
