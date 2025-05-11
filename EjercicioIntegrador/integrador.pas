@@ -10,6 +10,7 @@ Const
 Type 
     ConjuntoChar =   set Of char;
     cadena70 =   string[70];
+    arreglorobot = array[1..18] Of char;
 
     VectorCodigo =   Record
         V:   array[1..18] Of char;
@@ -41,6 +42,12 @@ Type
     End;
 
     TFabricantes =   array[1..MAX_FABRICANTES] Of TFabricante;
+
+    VectComp = record
+        V: array[1..10] Of integer;
+        DimL: integer;
+        DimF: integer;
+    end;
 
 Const 
     FABRICANTES:   TFabricantes =   (
@@ -408,6 +415,67 @@ begin
         end;
 
     VerificarFabricante := Encontrado and CumpleAntiguedad;
+end;
+
+procedure LeerCodigoRobot(var codigoRobot: arreglorobot);
+var
+    i: integer;
+    c: char;
+begin
+    writeln('Ingresar Codigo de Robot: ');
+    for i := 1 to 18 do
+        begin
+            // Leer caracter
+            read(c);
+            // Si es un caracter que nos interesa
+            if (c in ALFABETOMAYUS) or (c in ALFABETOMINUS) or (c in DIGITOS_CHAR) then codigoRobot[i] := c;
+        end;
+
+end;
+
+procedure leerPuntajeCompetencias(var arregloCompetencias: VectComp);
+begin
+    
+end;
+
+
+procedure SimularInscripcion();
+
+var
+    codigoRobot: arreglorobot;
+    IdRobot, IdFabricante: integer;
+    nombreRobot, NombreFabricante: cadena70;
+    arregloCompetencias: VectComp;
+
+begin
+    // Lee la informacion de los robots hasta que se lea el robot 'DEEPLEARN'
+    repeat
+        // Lee el codigo del robot
+        LeerCodigoRobot(codigoRobot);
+
+        // Lee el ID del robot
+        writeln('Ingrese el ID del robot: ');
+        readln(IDRobot);
+
+        // Lee el nombre del robot
+        writeln('Ingrese el nombre del robot: ');
+        readln(nombreRobot);
+
+        // Lee el nombre del fabricante
+        writeln('Ingrese el nombre del fabricante: ');
+        readln(NombreFabricante);
+
+        // Lee el ID del fabricante
+        writeln('Ingrese la ID del fabricante: ');
+        readln(IdFabricante);
+
+        // Lee el puntaje de competencias [TODO]
+        leerPuntajeCompetencias(arregloCompetencias);
+
+        // La inscripción es exitosa si el codigo es válido, la ID del robot y del fabricante son validas; y si el fabricante existe y cumple con la antiguedad de 3 años
+        Exito := CodigoValido(codigoRobot) and IdValida(IdRobot, IdFabricante) and VerificarFabricante(FABRICANTES, NombreFabricante, 3);
+    until (nombreRobot = 'DEEPLEARN');
+    
 end;
 
 Begin
