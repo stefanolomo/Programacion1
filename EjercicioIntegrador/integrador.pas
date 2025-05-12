@@ -10,7 +10,6 @@ Const
 Type 
     ConjuntoChar =   set Of char;
     cadena70 =   string[70];
-    arreglorobot = array[1..18] Of char;
 
     VectorCodigo =   Record
         V:   array[1..18] Of char;
@@ -417,7 +416,7 @@ begin
     VerificarFabricante := Encontrado and CumpleAntiguedad;
 end;
 
-procedure LeerCodigoRobot(var codigoRobot: arreglorobot);
+procedure LeerCodigoRobot(var codigoRobot: VectorCodigo);
 var
     i: integer;
     c: char;
@@ -428,8 +427,11 @@ begin
             // Leer caracter
             read(c);
             // Si es un caracter que nos interesa
-            if (c in ALFABETOMAYUS) or (c in ALFABETOMINUS) or (c in DIGITOS_CHAR) then codigoRobot[i] := c;
+            if (c in ALFABETOMAYUS) or (c in ALFABETOMINUS) or (c in DIGITOS_CHAR) then codigoRobot.V[i] := c;
         end;
+
+    codigoRobot.DimL := i;
+    codigoRobot.DimF := 18;
 
 end;
 
@@ -442,10 +444,11 @@ end;
 procedure SimularInscripcion();
 
 var
-    codigoRobot: arreglorobot;
+    codigoRobot: VectorCodigo;
     IdRobot, IdFabricante: integer;
     nombreRobot, NombreFabricante: cadena70;
     arregloCompetencias: VectComp;
+    Exito: boolean;
 
 begin
     // Lee la informacion de los robots hasta que se lea el robot 'DEEPLEARN'
