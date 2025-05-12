@@ -7,7 +7,16 @@ Const
     DIGITOS_INT =   [0..9];
     MAX_FABRICANTES =   30;
 
-Type 
+Type
+    // Puntero del siguiente
+    PtrCompetencia = ^NodoCompetencia;
+
+    // Nodo de cada competencia
+    NodoCompetencia = record
+        puntaje: integer;
+        siguiente: PtrCompetencia;
+    end;
+
     ConjuntoChar =   set Of char;
     cadena70 =   string[70];
 
@@ -434,7 +443,7 @@ begin
 
 end;
 
-procedure leerPuntajeCompetencias(var arregloCompetencias: VectComp);
+procedure leerPuntajeCompetencias10(var arregloCompetencias: VectComp);
 
 var
     i, puntaje: integer;
@@ -468,6 +477,55 @@ begin
         end;
 end;
 
+procedure leerPuntajeCompetenciasInd(var ListaCompetencias: PtrCompetencia);
+
+var
+    nuevoNodo, Ultimo: PtrCompetencia;
+    puntaje, i: integer;
+    continuar: char;
+
+begin
+    // Iniciamos la lista vacia y el ultimo tambien
+    ListaCompetencias := nil;
+    Ultimo := nil;
+    i := 1;
+
+    repeat
+        writeln('Ingrese el puntaje obtenido en la competencia', i);
+            readln(puntaje);
+
+        // Si el puntaje es invalido, se vuelve a preguntar
+        while (puntaje < 0) or (puntaje > 10) Do
+            begin
+                writeln('El puntaje ingresado es invalido. Ingrese un nuevo puntaje entre 0 y 10');
+                readln(puntaje);
+            end;
+        
+        // Creamos un nuevo nodo de competencia
+        new(nuevoNodo);
+
+        // Almacenamos el puntaje leido y ponemos al siguiente en nil porque siempre agregamos al final de la lista
+        nuevoNodo^.puntaje := puntaje;
+        nuevoNodo^.siguiente := nil;
+
+        // Si la lista esta vacia
+        if (ListaCompetencias = nil) then ListaCompetencias := nuevoNodo
+        // Si tiene otro nodo, no esta vacia, lo tenemos que agregar al final
+        else
+            // Accedemos al ultimo, y cambiamos su atributo siguiente a el nuevo nodo
+            Ultimo^.siguiente := nuevoNodo;
+
+        // Actualizamos la posicion del ultimo ya que ahora es el nuevo nodo
+        Ultimo := nuevoNodo;
+
+        // Preguntamos al usuario si quiere continuar
+        writeln('Quiere seguir ingresando competencias? Si no es asi, ingrese "n" ');
+        readln(continuar);
+    until (continuar = 'n');
+    
+end;
+
+
 procedure SimularInscripcion();
 
 var
@@ -500,7 +558,7 @@ begin
         readln(IdFabricante);
 
         // Lee el puntaje de competencias [TODO]
-        leerPuntajeCompetencias(arregloCompetencias);
+        leerPuntajeCompetencias10(arregloCompetencias);
 
         // La inscripción es exitosa si el codigo es válido, la ID del robot y del fabricante son validas; y si el fabricante existe y cumple con la antiguedad de 3 años
         Exito := CodigoValido(codigoRobot) and IdValida(IdRobot, IdFabricante) and VerificarFabricante(FABRICANTES, NombreFabricante, 3);
