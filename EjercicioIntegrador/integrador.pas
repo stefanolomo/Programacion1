@@ -45,7 +45,6 @@ Type
     VectComp = record
         V: array[1..10] Of integer;
         DimL: integer;
-        DimF: integer;
     end;
 
 Const 
@@ -436,10 +435,38 @@ begin
 end;
 
 procedure leerPuntajeCompetencias(var arregloCompetencias: VectComp);
-begin
-    
-end;
 
+var
+    i, puntaje: integer;
+
+begin
+    writeln('Ingresar la cantidad de competencias en las que participo el robot: ');
+    // La cantidad de competencias es la diml del arreglo de competencias
+    readln(arregloCompetencias.DimL);
+
+    // Si la cantidad ingresada es invalida, se pregunta de nuevo hasta que se ingrese una que este bien
+    while (arregloCompetencias.DimL < 0) or (arregloCompetencias.DimL > 10) Do
+        begin
+            writeln('Cantidad de competencias invalida, solo se puede ingresar hasta 10 competencias: ');
+            readln(arregloCompetencias.DimL);
+        end;
+
+    for i := 1 to arregloCompetencias.DimL do
+        begin
+            writeln('Ingrese el puntaje obtenido en la competencia', i);
+            readln(puntaje);
+
+            // Si el puntaje es invalido, se vuelve a preguntar
+            while (puntaje < 0) or (puntaje > 10) Do
+                begin
+                    writeln('El puntaje ingresado es invalido. Ingrese un nuevo puntaje entre 0 y 10');
+                    readln(puntaje);
+                end;
+            
+            // Guardamos el puntaje en el arreglo en la posicion de la competencia que le corresponde
+            arregloCompetencias.V[i] := puntaje;
+        end;
+end;
 
 procedure SimularInscripcion();
 
