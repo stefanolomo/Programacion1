@@ -488,7 +488,7 @@ begin
     i := 1;
 
     repeat
-        writeln('Ingrese el puntaje obtenido en la competencia', i);
+        writeln('Ingrese el puntaje obtenido en la competencia ', i);
             readln(puntaje);
 
         // Si el puntaje es invalido, se vuelve a preguntar
@@ -518,6 +518,8 @@ begin
         // Preguntamos al usuario si quiere continuar
         writeln('Quiere seguir ingresando competencias? Si no es asi, ingrese "n" ');
         readln(continuar);
+
+        i := i + 1;
     until (continuar = 'n');
     
 end;
@@ -530,6 +532,7 @@ var
     nombreRobot, NombreFabricante: cadena70;
     arregloCompetencias: VectComp;
     Exito: boolean;
+    CompetenciasPtr: PtrCompetencia;
 
 begin
     // Lee la informacion de los robots hasta que se lea el robot 'DEEPLEARN'
@@ -553,8 +556,11 @@ begin
         writeln('Ingrese la ID del fabricante: ');
         readln(IdFabricante);
 
-        // Lee el puntaje de competencias [TODO]
+        // Lee el puntaje de 10 competencias
         leerPuntajeCompetencias10(arregloCompetencias);
+
+        // Lee el puntaje de competencias indefinidas
+        leerPuntajeCompetenciasInd(CompetenciasPtr);
 
         // La inscripción es exitosa si el codigo es válido, la ID del robot y del fabricante son validas; y si el fabricante existe y cumple con la antiguedad de 3 años
         Exito := CodigoValido(codigoRobot) and IdValida(IdRobot, IdFabricante) and VerificarFabricante(FABRICANTES, NombreFabricante, 3);
@@ -571,8 +577,8 @@ Begin
 End.
 
 // Codigos del robot validos:
-// EE23aa456780ABAB90 / EE23aa 45678 0ABAB90
-// HH11ee2345688ABFC8 / HH11ee 23456 88ABFC8
+// EE23AA456780ABAB90 / EE23EE 45678 0ABAB90
+// HH11EE2345688ABFC8 / HH11EE 23456 88ABFC8
 // ParteA: 6 caracteres con 2 mayus y dos digitos
 // ParteB: 5 digitos en orden creciente que no estan en A
 // ParteC: 7 caracteres que tengan A seguido de B si tiene digitos no deben estar en A
