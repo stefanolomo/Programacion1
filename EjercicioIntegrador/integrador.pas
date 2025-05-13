@@ -565,7 +565,7 @@ begin
         // La inscripción es exitosa si el codigo es válido, la ID del robot y del fabricante son validas; y si el fabricante existe y cumple con la antiguedad de 3 años
         Exito := CodigoValido(codigoRobot) and IdValida(IdRobot, IdFabricante) and VerificarFabricante(FABRICANTES, NombreFabricante, 3);
         
-        if Exito then writeln('Se inscribio al robot ', nombreRobot, 'con exito')
+        if Exito then writeln('Se inscribio al robot ', nombreRobot, ' con exito')
         else writeln('Hubo un error en la inscripcion del robot ', nombreRobot);
 
     until (nombreRobot = 'DEEPLEARN');
