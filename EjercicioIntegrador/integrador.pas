@@ -144,7 +144,7 @@ Begin
 
 
 
-// Si la suma de los digitos del robot es mayor a la del fabricante entonces la ID es válida
+    // Si la suma de los digitos del robot es mayor a la del fabricante entonces la ID es válida
     IdValida := (sumaRobot > sumaFabricante);
 End;
 
@@ -340,21 +340,39 @@ Var
     i: integer;
 
 Begin
+    writeln('----Se esta descomponiendo el codigo en cada parte----');
+
+    writeln('A->');
     // Parte A: Primeros 6 caracteres
     For i := 1 to 6 do
-        A.V[i] := codigo.V[i];
+        begin
+            write(codigo.V[i]);
+            A.V[i] := codigo.V[i];
+        end;
     A.DimL := 6;
     A.DimF := 6;
 
+    writeln('');
+
+    writeln('B->');
     // Parte B: Siguientes 5 caracteres
     For i := 1 to 5 do
-        B.V[i] := codigo.V[i + 6];
+        begin
+            write(codigo.V[i+6]); 
+            B.V[i] := codigo.V[i+6];
+        end;
     B.DimL := 5;
     B.DimF := 5;
 
+    writeln('');
+
+    writeln('C->');
     // Parte C: Ultimos 7 caracteres
     For i := 1 to 7 do
-        C.V[i] := codigo.V[i + 11];
+        begin
+            write(codigo.V[i+11]);
+            C.V[i] := codigo.V[i+11];
+        end;
     C.DimL := 7;
     C.DimF := 7;
 End;
@@ -369,6 +387,11 @@ var
 Begin
     // Descomponemos el codigo del robot en cada parte
     DescomponerVectorCodigo(CodigoRobot, secuenciaA, secuenciaB, secuenciaC);
+    writeln('Se ejecuto descomponercodigo');
+
+    writeln('CheckParteA: ', CheckParteA(secuenciaA));
+    writeln('CheckParteB: ', CheckParteB(secuenciaB, secuenciaA));
+    writeln('CheckParteC: ', CheckParteC(secuenciaC, secuenciaA));
 
     // Pasamos cada parte a cada check y ese sera el valor de la funcion
     CodigoValido := CheckParteA(secuenciaA) and CheckParteB(secuenciaB, secuenciaA) and CheckParteC(secuenciaC, secuenciaA);
@@ -524,7 +547,6 @@ begin
     
 end;
 
-
 procedure SimularInscripcion();
 
 var
@@ -561,10 +583,33 @@ begin
 
         // La inscripción es exitosa si el codigo es válido, la ID del robot y del fabricante son validas; y si el fabricante existe y cumple con la antiguedad de 3 años
         Exito := CodigoValido(codigoRobot) and IdValida(IdRobot, IdFabricante) and VerificarFabricante(FABRICANTES, NombreFabricante, 3);
-    until (nombreRobot = 'DEEPLEARN');
+        
+        writeln('Exito: ', Exito);
+
+        writeln('CodigoValido: ', CodigoValido(codigoRobot));
+
+        writeln('IdValida: ', IdValida(IdRobot, IdFabricante));
+        writeln('VerificarFabricante: ', VerificarFabricante(FABRICANTES, NombreFabricante, 3));
+    until (nombreRobot = 'Hola');
     
 end;
 
 Begin
     SimularInscripcion();
 End.
+
+// Codigos del robot validos:
+// EE23aa456780ABAB90 / EE23aa 45678 0ABAB90
+// HH11ee2345688ABFC8 / HH11ee 23456 88ABFC8
+// ParteA: 6 caracteres con 2 mayus y dos digitos
+// ParteB: 5 digitos en orden creciente que no estan en A
+// ParteC: 7 caracteres que tengan A seguido de B si tiene digitos no deben estar en A
+
+// ID del fabricante y robot validas:
+// Robot -> 12345 Fabricante -> 5432
+// Robot -> 99112 Fabricante -> 6231
+// La suma de los digitos de la ID del robot deben ser mayores a la suma de los del fabricante
+
+// Fabricantes existentes y con antiguedad >= 3:
+// SynthTech
+// RoboGenius
