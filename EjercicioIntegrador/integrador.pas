@@ -8,14 +8,17 @@ Const
     MAX_FABRICANTES =   30;
 
 Type
-    // Puntero del siguiente
-    PtrCompetencia = ^NodoCompetencia;
+    // Puntero a los nodos
+    PtrID = ^NodoID;
 
-    // Nodo de cada competencia
-    NodoCompetencia = record
-        puntaje: integer;
-        siguiente: PtrCompetencia;
+    // Nodos de ID de robots y el siguiente que siempre apunta a otro nodo
+    NodoID = record
+        id: Integer;
+        sig: PtrID;
     end;
+
+    // Array de las 11 listas
+    TArrListas = array [0..10] of PtrID;
 
     ConjuntoChar =   set Of char;
     cadena70 =   string[70];
@@ -474,18 +477,65 @@ begin
         end;
 end;
 
-procedure leerPuntajeCompetenciasInd(var ListaCompetencias: PtrCompetencia);
+procedure InicializarListas(var L: TArrListas);
+var
+    p: integer;
+
+begin
+    for p := 0 to 10 Do
+        L[p] := nil;
+end;
+
+procedure InsertarEnListaIdOrdenado(var L: PtrID; IdRobot: integer);
 
 var
-    nuevoNodo, Ultimo: PtrCompetencia;
+    ant, act, nodo: PtrID;
+
+begin
+    // Crea un nuevo nodo en memoria
+    new(nodo);
+
+    // Le asigna la ID y el siguiente es nil porque es el ultimo
+    nodo^.id := IdRobot;
+    nodo^.sig := nil;
+
+    ant := nil;
+    act := L;
+
+    // Buscamos la posición de la lista L donde act(L)^.id es menor a IdRobot
+    while (act <> nil) and (act^.id < IdRobot) do
+        begin
+            // Vamos corriendo actual y anterior
+            ant := act;
+            act := act^.sig;
+        end;
+
+    // Cuando salimos del while: ant debe ser la posición despues de la que debemos insertar nuestro nodo
+
+    // Si ant es nil, significa que la lista estaba vacia
+    if ant = nil then L := nodo
+
+    // De otra manera, habia elementos en la lista y tenemos que agregar al nodo en el siguiente de ant
+    else
+        ant^.sig := nodo;
+
+    // Conectamos el siguiente de nuestro nodo al resto de la lista, que se encuentra en act
+    nodo^.sig := act;
+
+end;
+
+procedure leerPuntajeCompetenciasInd(var ArrListas: TArrListas; IdRobot: integer; var Exito: boolean);
+
+var
     puntaje, i: integer;
     continuar: char;
 
 begin
-    // Iniciamos la lista vacia y el ultimo tambien
-    ListaCompetencias := nil;
-    Ultimo := nil;
+    // Iniciamos el contador en 1
     i := 1;
+
+    // Asumimos que los puntajes no se pudieron leer
+    Exito := False;
 
     repeat
         writeln('Ingrese el puntaje obtenido en la competencia ', i);
@@ -498,22 +548,7 @@ begin
                 readln(puntaje);
             end;
         
-        // Creamos un nuevo nodo de competencia
-        new(nuevoNodo);
-
-        // Almacenamos el puntaje leido y ponemos al siguiente en nil porque siempre agregamos al final de la lista
-        nuevoNodo^.puntaje := puntaje;
-        nuevoNodo^.siguiente := nil;
-
-        // Si la lista esta vacia
-        if (ListaCompetencias = nil) then ListaCompetencias := nuevoNodo
-        // Si tiene otro nodo, no esta vacia, lo tenemos que agregar al final
-        else
-            // Accedemos al ultimo, y cambiamos su atributo siguiente a el nuevo nodo
-            Ultimo^.siguiente := nuevoNodo;
-
-        // Actualizamos la posicion del ultimo ya que ahora es el nuevo nodo
-        Ultimo := nuevoNodo;
+        InsertarEnListaIdOrdenado(ArrListas[puntaje], IdRobot);
 
         // Preguntamos al usuario si quiere continuar
         writeln('Quiere seguir ingresando competencias? Si no es asi, ingrese "n" ');
@@ -521,6 +556,8 @@ begin
 
         i := i + 1;
     until (continuar = 'n');
+
+    Exito := True;
     
 end;
 
@@ -531,10 +568,14 @@ var
     IdRobot, IdFabricante: integer;
     nombreRobot, NombreFabricante: cadena70;
     arregloCompetencias: VectComp;
+    ListasPorPuntaje: TArrListas;
     Exito: boolean;
-    CompetenciasPtr: PtrCompetencia;
+    lecturacomp: char;
 
 begin
+    // Inicializa las listas de puntajes
+    InicializarListas(ListasPorPuntaje);
+
     // Lee la informacion de los robots hasta que se lea el robot 'DEEPLEARN'
     repeat
         // Lee el codigo del robot
@@ -542,7 +583,7 @@ begin
 
         // Lee el ID del robot
         writeln('Ingrese el ID del robot: ');
-        readln(IDRobot);
+        readln(IdRobot);
 
         // Lee el nombre del robot
         writeln('Ingrese el nombre del robot: ');
@@ -556,11 +597,13 @@ begin
         writeln('Ingrese la ID del fabricante: ');
         readln(IdFabricante);
 
-        // Lee el puntaje de 10 competencias
-        leerPuntajeCompetencias10(arregloCompetencias);
+        // Se pregunta si participo en mas de 10 competencias lo que va a determinar el modo a usar de leer
+        writeln('Las competencias en las que el robot particio son mas de 10? (s/n)');
+        readln(lecturacomp);
 
-        // Lee el puntaje de competencias indefinidas
-        leerPuntajeCompetenciasInd(CompetenciasPtr);
+        if lecturacomp = 's' then leerPuntajeCompetenciasInd(ListasPorPuntaje, IdRobot, Exito)
+        else
+            leerPuntajeCompetencias10(arregloCompetencias);
 
         // La inscripción es exitosa si el codigo es válido, la ID del robot y del fabricante son validas; y si el fabricante existe y cumple con la antiguedad de 3 años
         Exito := CodigoValido(codigoRobot) and IdValida(IdRobot, IdFabricante) and VerificarFabricante(FABRICANTES, NombreFabricante, 3);
