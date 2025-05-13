@@ -1,15 +1,6 @@
 program auxiliarPuntaje;
 
 type
-    // // Puntero del siguiente
-    // PtrCompetencia = ^NodoCompetencia;
-
-    // // Nodo de cada competencia
-    // NodoCompetencia = record
-    //     puntaje: integer;
-    //     siguiente: PtrCompetencia;
-    // end;
-
     // Puntero a los nodos
     PtrID = ^NodoID;
 
@@ -23,7 +14,6 @@ type
     TArrListas = array [0..10] of PtrID;
 
 procedure InicializarListas(var L: TArrListas);
-
 var
     p: integer;
 
@@ -48,8 +38,8 @@ begin
     ant := nil;
     act := L;
 
-    // Buscamos la posición de la lista L donde act(L)^.id es mayor o igual a IdRobot
-    while (act <> nil) and (act^.id >= IdRobot) do
+    // Buscamos la posición de la lista L donde act(L)^.id es menor a IdRobot
+    while (act <> nil) and (act^.id < IdRobot) do
         begin
             // Vamos corriendo actual y anterior
             ant := act;
@@ -59,7 +49,7 @@ begin
     // Cuando salimos del while: ant debe ser la posición despues de la que debemos insertar nuestro nodo
 
     // Si ant es nil, significa que la lista estaba vacia
-    if ant = nil then ant := nodo
+    if ant = nil then L := nodo
 
     // De otra manera, habia elementos en la lista y tenemos que agregar al nodo en el siguiente de ant
     else
@@ -70,17 +60,14 @@ begin
 
 end;
 
-procedure leerPuntajeCompetenciasInd(var ListaCompetencias: PtrCompetencia; IdRobot: integer; var Exito: boolean);
+procedure leerPuntajeCompetenciasInd(var ArrListas: TArrListas; IdRobot: integer; var Exito: boolean);
 
 var
-    nuevoNodo, Ultimo: PtrCompetencia;
     puntaje, i: integer;
     continuar: char;
 
 begin
-    // Iniciamos la lista vacia y el ultimo tambien
-    ListaCompetencias := nil;
-    Ultimo := nil;
+    // Iniciamos el contador en 1
     i := 1;
 
     // Asumimos que los puntajes no se pudieron leer
@@ -97,22 +84,7 @@ begin
                 readln(puntaje);
             end;
         
-        // Creamos un nuevo nodo de competencia
-        new(nuevoNodo);
-
-        // Almacenamos el puntaje leido y ponemos al siguiente en nil porque siempre agregamos al final de la lista
-        nuevoNodo^.puntaje := puntaje;
-        nuevoNodo^.siguiente := nil;
-
-        // Si la lista esta vacia
-        if (ListaCompetencias = nil) then ListaCompetencias := nuevoNodo
-        // Si tiene otro nodo, no esta vacia, lo tenemos que agregar al final
-        else
-            // Accedemos al ultimo, y cambiamos su atributo siguiente a el nuevo nodo
-            Ultimo^.siguiente := nuevoNodo;
-
-        // Actualizamos la posicion del ultimo ya que ahora es el nuevo nodo
-        Ultimo := nuevoNodo;
+        InsertarEnListaIdOrdenado(ArrListas[puntaje], IdRobot);
 
         // Preguntamos al usuario si quiere continuar
         writeln('Quiere seguir ingresando competencias? Si no es asi, ingrese "n" ');
@@ -120,6 +92,8 @@ begin
 
         i := i + 1;
     until (continuar = 'n');
+
+    Exito := True;
     
 end;
 
@@ -128,16 +102,20 @@ procedure SimularInscripcion();
 var
     
     IdRobot: integer;
-    // CompetenciasPtr: PtrCompetencia;
+    ListasPorPuntaje: TArrListas;
+    Exito: boolean;
 
 begin
+    // Inicializa las listas (vacias)
+    InicializarListas(ListasPorPuntaje);
+    
     repeat
         // Lee el ID del robot
         writeln('Ingrese el ID del robot: ');
-        readln(IDRobot);
+        readln(IdRobot);
 
         // Lee el puntaje de competencias indefinidas
-        // leerPuntajeCompetenciasInd(CompetenciasPtr, , Exito);
+        leerPuntajeCompetenciasInd(ListasPorPuntaje, IdRobot, Exito);
 
     until (False);
     
