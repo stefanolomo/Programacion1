@@ -434,8 +434,7 @@ begin
         begin
             // Leer caracter
             read(c);
-            // Si es un caracter que nos interesa
-            if (c in ALFABETOMAYUS) or (c in ALFABETOMINUS) or (c in DIGITOS_CHAR) then codigoRobot.V[i] := c;
+            codigoRobot.V[i] := c;
         end;
 
     codigoRobot.DimL := i;
@@ -462,7 +461,7 @@ begin
 
     for i := 1 to arregloCompetencias.DimL do
         begin
-            writeln('Ingrese el puntaje obtenido en la competencia', i);
+            writeln('Ingrese el puntaje obtenido en la competencia ', i, ':');
             readln(puntaje);
 
             // Si el puntaje es invalido, se vuelve a preguntar
@@ -567,5 +566,5 @@ begin
 end;
 
 Begin
-
+    SimularInscripcion();
 End.
