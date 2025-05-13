@@ -340,39 +340,21 @@ Var
     i: integer;
 
 Begin
-    writeln('----Se esta descomponiendo el codigo en cada parte----');
-
-    writeln('A->');
     // Parte A: Primeros 6 caracteres
     For i := 1 to 6 do
-        begin
-            write(codigo.V[i]);
-            A.V[i] := codigo.V[i];
-        end;
+        A.V[i] := codigo.V[i];
     A.DimL := 6;
     A.DimF := 6;
 
-    writeln('');
-
-    writeln('B->');
     // Parte B: Siguientes 5 caracteres
     For i := 1 to 5 do
-        begin
-            write(codigo.V[i+6]); 
-            B.V[i] := codigo.V[i+6];
-        end;
+        B.V[i] := codigo.V[i+6];
     B.DimL := 5;
     B.DimF := 5;
 
-    writeln('');
-
-    writeln('C->');
     // Parte C: Ultimos 7 caracteres
     For i := 1 to 7 do
-        begin
-            write(codigo.V[i+11]);
-            C.V[i] := codigo.V[i+11];
-        end;
+        C.V[i] := codigo.V[i+11];
     C.DimL := 7;
     C.DimF := 7;
 End;
@@ -387,11 +369,6 @@ var
 Begin
     // Descomponemos el codigo del robot en cada parte
     DescomponerVectorCodigo(CodigoRobot, secuenciaA, secuenciaB, secuenciaC);
-    writeln('Se ejecuto descomponercodigo');
-
-    writeln('CheckParteA: ', CheckParteA(secuenciaA));
-    writeln('CheckParteB: ', CheckParteB(secuenciaB, secuenciaA));
-    writeln('CheckParteC: ', CheckParteC(secuenciaC, secuenciaA));
 
     // Pasamos cada parte a cada check y ese sera el valor de la funcion
     CodigoValido := CheckParteA(secuenciaA) and CheckParteB(secuenciaB, secuenciaA) and CheckParteC(secuenciaC, secuenciaA);
@@ -440,8 +417,6 @@ begin
                     // La derecha es el medio y la izquierda no cambia
                     d := m - 1;
                 end;
-            // writeln(FABRICANTES[i].nombre);
-            // writeln(FABRICANTES[i].antiguedad);
         end;
 
     VerificarFabricante := Encontrado and CumpleAntiguedad;
@@ -584,13 +559,10 @@ begin
         // La inscripción es exitosa si el codigo es válido, la ID del robot y del fabricante son validas; y si el fabricante existe y cumple con la antiguedad de 3 años
         Exito := CodigoValido(codigoRobot) and IdValida(IdRobot, IdFabricante) and VerificarFabricante(FABRICANTES, NombreFabricante, 3);
         
-        writeln('Exito: ', Exito);
+        if Exito then writeln('Se inscribio al robot ', nombreRobot, 'con exito')
+        else writeln('Hubo un error en la inscripcion del robot ', nombreRobot);
 
-        writeln('CodigoValido: ', CodigoValido(codigoRobot));
-
-        writeln('IdValida: ', IdValida(IdRobot, IdFabricante));
-        writeln('VerificarFabricante: ', VerificarFabricante(FABRICANTES, NombreFabricante, 3));
-    until (nombreRobot = 'Hola');
+    until (nombreRobot = 'DEEPLEARN');
     
 end;
 
