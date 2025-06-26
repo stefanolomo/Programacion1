@@ -88,5 +88,18 @@ begin
     end;
 end;
 
+procedure LiberarLista(var Lista: ptrnodo);
+
+var
+    act: ptrnodo;
+
+begin
+    while (Lista <> nil) do begin
+        act := Lista;
+        Lista := Lista^.sig;
+        dispose(act);
+    end;
+end;
+
 begin
 end.
