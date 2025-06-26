@@ -166,6 +166,31 @@ begin
     until (datos.Pais = 'ZZZ');
 end;
 
+procedure InformarLista (Lista: ptrnodo);
+
+var
+    i: integer;
+
+begin
+    i := 0;
+
+    while (Lista <> nil) do begin
+        i := i + 1;
+
+        writeln('Participante ', i);
+
+        writeln('Apellido: ', Lista^.datos.Apellido);
+        writeln('Nombre: ', Lista^.datos.Nombre);
+        writeln('Año de nacimiento: ', Lista^.datos.Nacimiento);
+        writeln('Area de investigacion: ', Lista^.datos.Area);
+        writeln('Pais de origen: ', Lista^.datos.Pais);
+
+        Lista := Lista^.sig;
+    end;
+    
+    writeln('En la lista habia/n ', i, ' elemento/s.');
+end;
+
 var
     ListaParticipantes, ListaC: ptrnodo;
 
@@ -173,4 +198,15 @@ begin
     CargarLista(ListaParticipantes);
 
     ListaC := nil;
+
+    RecorrerLista(ListaParticipantes, ListaC);
+
+    writeln('Lista Participantes');
+    InformarLista(ListaParticipantes);
+
+    writeln('Lista punto C');
+    InformarLista(ListaC);
+
+    LiberarLista(ListaParticipantes);
+    LiberarLista(ListaC);
 end.
