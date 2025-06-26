@@ -210,6 +210,20 @@ begin
     until (datos.numero = 0);
 end;
 
+procedure LiberarLista(var Lista: ptrnodo);
+
+var
+    act: ptrnodo;
+
+begin
+    act := Lista;
+    while (Lista <> nil) do begin
+        act := Lista;
+        Lista := Lista^.sig;
+        dispose(act);
+    end;
+end;
+
 var
     ListaTickets, ListaA, ListaC: ptrnodo;
     ConjuntoDeCajas: conjCajas;
@@ -231,4 +245,8 @@ begin
 
     writeln('En la lista del punto C (Todos los tickets de las cajas que recaudaron mas de 12mil pesos vendiendo menos de 100 tickets): ');
     InformarLista(ListaC);
+
+    LiberarLista(ListaTickets);
+    LiberarLista(ListaA);
+    LiberarLista(ListaC);
 end.
