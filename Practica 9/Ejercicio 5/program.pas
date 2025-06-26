@@ -137,7 +137,40 @@ begin
     writeln('El porcentaje de participantes extranjeros es de ', CalcularPorcentajeExtranjeros(Arg, Ext):0:2, '%');
 end;
 
-var
+procedure Leerdatos(var datos: registrodatos);
 
 begin
+    writeln('Ingresar el apellido del participante: ');
+    readln(datos.Apellido);
+    writeln('Ingresar el nombre del participante: ');
+    readln(datos.Nombre);
+    writeln('Ingresar el año de nacimiento del participante: ');
+    readln(datos.Nacimiento);
+    writeln('Ingresar el area de investigacion del participante: ');
+    readln(datos.Area);
+    writeln('Ingresar el pais de origen del participante: ');
+    readln(datos.Pais);
+end;
+
+procedure CargarLista(var Lista: ptrnodo);
+
+var
+    datos: registrodatos;
+
+begin
+    repeat    
+        Leerdatos(datos);
+
+        if (datos.Pais <> 'ZZZ') then
+            InsertarOrdenado(Lista, datos);
+    until (datos.Pais = 'ZZZ');
+end;
+
+var
+    ListaParticipantes, ListaC: ptrnodo;
+
+begin
+    CargarLista(ListaParticipantes);
+
+    ListaC := nil;
 end.
