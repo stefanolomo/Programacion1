@@ -23,34 +23,34 @@ type
         sig: ptrnodo;
     end;
 
-function EsArgentino(nacionalidad: tipocadena): boolean;
-
-begin
-    EsArgentino := (nacionalidad = Argentina);
-end;
-
-function EsMenorDe30(edad: integer): boolean;
-
-begin
-    EsMenorDe30 := (edad < 30);
-end;
-
-function CalcularPorcentajeExtranjeros(cantArg, cantExtr: integer): real;
-
-begin
-    CalcularPorcentaje := ((cantExtr) / (cantArg + cantExtr)) * 100;
-end;
-
 function Edad(nacimiento: integer): integer;
 
 begin
     Edad := 2025 - nacimiento;
 end;
 
+function EsArgentino(nacionalidad: tipocadena): boolean;
+
+begin
+    EsArgentino := (nacionalidad = 'Argentina');
+end;
+
+function EsMenorDe30(nacimiento: integer): boolean;
+
+begin
+    EsMenorDe30 := (Edad(nacimiento) < 30);
+end;
+
+function CalcularPorcentajeExtranjeros(cantArg, cantExtr: integer): real;
+
+begin
+    CalcularPorcentajeExtranjeros := ((cantExtr) / (cantArg + cantExtr)) * 100;
+end;
+
 function CumpleParteA(datos: registrodatos): boolean;
 
 begin
-    CumpleParteA := (Edad(datos.Nacimiento) < 30) and (datos.Pais = 'Argentina') and (datos.Area = 'Accesibilidad Web');
+    CumpleParteA := EsMenorDe30(datos.Nacimiento) and (EsArgentino(datos.Pais)) and (datos.Area = 'Accesibilidad Web');
 end;
 
 procedure InformarParticipante(datos: registrodatos);
@@ -100,6 +100,44 @@ begin
         dispose(act);
     end;
 end;
+
+procedure RecorrerLista(Lista: ptrnodo; var ListaC: ptrnodo);
+
+var
+    act: ptrnodo;
+    contadorPuntoA, Arg, Ext: integer;
+
+begin
+    act := Lista;
+
+    contadorPuntoA := 0;
+    Arg := 0;
+    Ext := 0;
+
+    while (act <> nil) do begin
+        if CumpleParteA(act^.datos) then begin
+            contadorPuntoA := contadorPuntoA + 1;
+
+            InformarParticipante(act^.datos);
+        end;
+
+        if EsArgentino(act^.datos.Pais) then
+            Arg := Arg + 1
+        else begin
+            Ext := Ext + 1;
+        end;
+
+        InsertarOrdenado(ListaC, act^.datos); 
+
+        act := act^.sig;
+    end;
+
+    writeln('La cantidad de participantes que cumplen los requisitos son: ', contadorPuntoA);
+
+    writeln('El porcentaje de participantes extranjeros es de ', CalcularPorcentajeExtranjeros(Arg, Ext):0:2, '%');
+end;
+
+var
 
 begin
 end.
