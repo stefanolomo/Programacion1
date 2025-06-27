@@ -81,7 +81,7 @@ begin
 
     if (ant = nil) then begin
         nodo^.sig := Lista;
-        Lista^.sig := nodo; 
+        Lista := nodo; 
     end else begin
         ant^.sig := nodo;
         nodo^.sig := act;
