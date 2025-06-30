@@ -74,6 +74,7 @@ var
 
 begin
     max1 := -1;
+    maxIn := 1;
 
     for i := 1 to 6 do begin
         if (A[i] > max1) then begin
@@ -93,6 +94,7 @@ var
 
 begin
     max1 := -1;
+    maxIn := 2006;
 
     for i := 1974 to 2006 do begin
         if (A[i] > max1) then begin
