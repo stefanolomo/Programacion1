@@ -152,5 +152,13 @@ begin
     writeln('La mayoria de los ingresantes nacieron en el año: ', HallarMaxEnArrEdades(FrecuenciaEdades));
 end;
 
+var
+    ListaEstudiantes: ptrnodo;
+
 begin
+    // CargarLista(ListaEstudiantes);
+
+    RecorrerLista(ListaEstudiantes);
+    
+    // LiberarLista(ListaEstudiantes);
 end.
