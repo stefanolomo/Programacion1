@@ -1,5 +1,8 @@
 program Ejercicio3;
 
+const
+    YEARACTUAL = 2025;
+
 { Se dispone de una lista con la información de los ingresantes a la Facultad en el año anterior. De cada
 ingresante se conoce: apellido, nombre, ciudad de origen, fecha de nacimiento (día, mes, año), si presentó el título del colegio secundario y el código de la carrera en la que se inscribe (1: APU, 2: ATIC, 3: LI, 4: LS, 5: IC, 6: CDO). Con esta información de los ingresantes se pide que recorra la lista una vez para:
 
@@ -47,7 +50,7 @@ var
     i: integer;
 
 begin
-    for i := 0 to 6 do
+    for i := 1 to 6 do
         A[i] := 0;
 end;
 
@@ -64,7 +67,7 @@ end;
 function Edad(year: tipoyear): integer;
 
 begin
-    Edad := 2025 - year;
+    Edad := YEARACTUAL - year;
 end;
 
 function HallarMaxEnArrCarrera(A: ArrCarrera): integer;
@@ -126,7 +129,7 @@ begin
                 writeln('El alumno de apellido ', act^.datos.Apellido, ' nació en Chacabuco');
             
             FrecuenciaEdades[act^.datos.Nacimiento.year] := FrecuenciaEdades[act^.datos.Nacimiento.year] + 1;
-            FrecuenciaEdades[Edad(act^.datos.Nacimiento.year)] := FrecuenciaEdades[Edad(act^.datos.Nacimiento.year)] + 1;
+            FrecuenciaCarreras[act^.datos.Carrera] := FrecuenciaCarreras[act^.datos.Carrera] + 1;
 
             ant := act;
             act := act^.sig;
@@ -143,6 +146,10 @@ begin
             dispose(aux);
         end;
     end;
+
+    writeln('La carrera con mas inscriptos es la que tiene el codigo: ', HallarMaxEnArrCarrera(FrecuenciaCarreras));
+
+    writeln('La mayoria de los ingresantes nacieron en el año: ', HallarMaxEnArrEdades(FrecuenciaEdades));
 end;
 
 begin
