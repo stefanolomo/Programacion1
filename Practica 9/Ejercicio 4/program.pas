@@ -53,7 +53,7 @@ begin
     SonIguales := (datos1.marca = datos2.marca) and (datos1.modelo = datos2.modelo) and (datos1.cantAsientos = datos2.cantAsientos);
 end;
 
-procedure EliminarLista(var Lista: ptrnodo; datos: registrodatos; var exito: boolean);
+procedure EliminarAvion(var Lista: ptrnodo; datos: registrodatos; var exito: boolean);
 
 var
     ant, act: ptrnodo;
@@ -86,10 +86,12 @@ procedure Leerdatos(var datos: registrodatos);
 begin
     writeln('Ingresar el modelo de avion: ');
     readln(datos.modelo);
-    writeln('Ingresar la marca del avion: ');
-    readln(datos.marca);
-    writeln('Ingresar la cantidad de asientos del avion: ');
-    readln(datos.cantAsientos);
+    if (datos.modelo <> 'ZZZ') then begin
+        writeln('Ingresar la marca del avion: ');
+        readln(datos.marca);
+        writeln('Ingresar la cantidad de asientos del avion: ');
+        readln(datos.cantAsientos);
+    end;
 end;
 
 procedure CargarLista(var Lista: ptrnodo);
@@ -157,7 +159,7 @@ begin
     repeat
         Leerdatos(datos);
         if (datos.modelo <> 'ZZZ') then
-            EliminarLista(Lista, datos, exito);
+            EliminarAvion(Lista, datos, exito);
             if (exito) then
                 writeln('Se eliminó con exito')
             else
