@@ -1,45 +1,173 @@
 program Insertar;
 
+{ Realizar un módulo que reciba un vector V, un valor N y un número I, y que devuelva el mismo vector
+donde se insertó el valor N en la posición I. }
+
 type
-    rango: 1..100;
-    dato: integer;
+    rango = 1..100;
     
     Vector = record
-        V: array[rango] of dato;
+        V: array[rango] of longint;
         DimL: 0..100;
     end;
 
-procedure InsertarPos(var mV: Vector; dato: dato; pos: rango; var exito: boolean);
-
+procedure InsertarPos(var mV: Vector; dato: longint; pos: rango; var exito: boolean);
 var
-    i: integer;
-
+    i: longint;
 begin
     exito := False;
-
-    // (mV.DimL < 100) : Hay por lo menos un espacio para insertar datos
-    // (pos >= 1) : La posicion es mayor o igual a la primera posicion
-    // (pos <= mV.DimL + 1) : La posición es menor o igual a la posicion del ultimo elemento mas uno, esto no permite insertar en lugares que no esten precedidos de un elemento
     if (mV.DimL < 100) and (pos >= 1) and (pos <= mV.DimL + 1) then
-        begin
-            // Se puede insertar el elemento dado en la posicion pedida
-            exito := True;
-            
-            // Desde la posicion mas alta bajando hasta la posición de insertado
-            for i := mV.DimL downto pos do
-                begin
-                    // Corremos los datos del vector hacia la derecha por un lugar
-                    mV.V[i+1] := mV.V[i];
-                end;
-
-            // Ya hay un espacio en la posicion ' pos ' entonces insertamos el dato
-            mV.V[pos] := dato;
-
-            // Aumentamos en 1 la dimL
-            mV.DimL := mV.DimL + 1;
-        end;
+    begin
+        exito := True;
+        for i := mV.DimL downto pos do
+            mV.V[i+1] := mV.V[i];
+        mV.V[pos] := dato;
+        mV.DimL := mV.DimL + 1;
+    end;
 end;
 
+procedure CargarVector(var mV: Vector);
+var
+    dato: longint;
+    posicion: integer;
+    seguir: boolean;
+    exito: boolean;
+    seguirChar: char;
 begin
+    seguir := True;
+    repeat
+        writeln('En que posicion quiere insertar? (1 a ', mV.DimL + 1, ')');
+        readln(posicion);
+
+        if (posicion < 1) or (posicion > mV.DimL + 1) then
+            writeln('Posicion invalida, intente de nuevo.')
+        else
+        begin
+            writeln('Que valor quiere insertar?');
+            readln(dato);
+
+            InsertarPos(mV, dato, posicion, exito);
+
+            if exito then
+                writeln('Se inserto en la posicion con exito!')
+            else
+                writeln('No se pudo insertar en la posicion');
+        end;
+
+        writeln('Quiere seguir? s/n');
+        readln(seguirChar);
+        seguir := (seguirChar <> 'n');
+    until (not seguir);
+end;
+
+procedure InicializarVector(var V: Vector);
+var
+    i: integer;
+begin
+    for i := 1 to 100 do
+        V.V[i] := 0;
+    V.DimL := 0;
+end;
+
+procedure InformarVector(V: Vector);
+var
+    i: longint;
+begin
+    writeln('Vector actual:');
+    for i := 1 to V.DimL do
+        writeln('Posicion ', i, ': ', V.V[i]);
+end;
+
+var
+    VectorPosiciones: Vector;
+
+begin
+    InicializarVector(VectorPosiciones);
+    CargarVector(VectorPosiciones);
+    InformarVector(VectorPosiciones);
+end.
+program Insertar;
+
+type
+    rango = 1..100;
     
+    Vector = record
+        V: array[rango] of longint;
+        DimL: 0..100;
+    end;
+
+procedure InsertarPos(var mV: Vector; dato: longint; pos: rango; var exito: boolean);
+var
+    i: longint;
+begin
+    exito := False;
+    if (mV.DimL < 100) and (pos >= 1) and (pos <= mV.DimL + 1) then
+    begin
+        exito := True;
+        for i := mV.DimL downto pos do
+            mV.V[i+1] := mV.V[i];
+        mV.V[pos] := dato;
+        mV.DimL := mV.DimL + 1;
+    end;
+end;
+
+procedure CargarVector(var mV: Vector);
+var
+    dato: longint;
+    posicion: integer;
+    seguir: boolean;
+    exito: boolean;
+    seguirChar: char;
+begin
+    seguir := True;
+    repeat
+        writeln('En que posicion quiere insertar? (1 a ', mV.DimL + 1, ')');
+        readln(posicion);
+
+        if (posicion < 1) or (posicion > mV.DimL + 1) then
+            writeln('Posicion invalida, intente de nuevo.')
+        else
+        begin
+            writeln('Que valor quiere insertar?');
+            readln(dato);
+
+            InsertarPos(mV, dato, posicion, exito);
+
+            if exito then
+                writeln('Se inserto en la posicion con exito!')
+            else
+                writeln('No se pudo insertar en la posicion');
+        end;
+
+        writeln('Quiere seguir? s/n');
+        readln(seguirChar);
+        seguir := (seguirChar <> 'n');
+    until (not seguir);
+end;
+
+procedure InicializarVector(var V: Vector);
+var
+    i: integer;
+begin
+    for i := 1 to 100 do
+        V.V[i] := 0;
+    V.DimL := 0;
+end;
+
+procedure InformarVector(V: Vector);
+var
+    i: longint;
+begin
+    writeln('Vector actual:');
+    for i := 1 to V.DimL do
+        writeln('Posicion ', i, ': ', V.V[i]);
+end;
+
+var
+    VectorPosiciones: Vector;
+
+begin
+    InicializarVector(VectorPosiciones);
+    CargarVector(VectorPosiciones);
+    InformarVector(VectorPosiciones);
 end.
