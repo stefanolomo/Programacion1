@@ -219,5 +219,20 @@ begin
     writeln('>> Para cada calle se entregaron: ');
 end;
 
+var
+    ListaEnvios: ptrnodo;
+    ArrListasCalles: ArrListas;
+    i: integer; 
+
 begin
+    ListaEnvios := nil;
+
+    // CargarListaEnvios (ListaEnvios);
+
+    RecorrerLista(ListaEnvios, ArrListasCalles);
+
+    LiberarLista(ListaEnvios);
+
+    for i := 1 to 122 do
+        LiberarLista(ArrListasCalles[i]);
 end.
