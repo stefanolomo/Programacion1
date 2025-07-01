@@ -15,7 +15,7 @@ d. Generar 10 nuevas listas con los envíos de las calles 10 a la 20. Cada lista
 type
     callesInteresadas = 10..20;
     tipodia = 1..31;
-    mes = 1..12;
+    tipomes = 1..12;
     tipofecha = record
         dia: tipodia;
         mes: tipomes;
@@ -29,9 +29,9 @@ type
         departamento: integer;
     end;
     paquete = record
-        Fecha: tipofecha;
-        Entregado: boolean;
-        Direccion: tipodireccion;
+        fecha: tipofecha;
+        entregado: boolean;
+        direccion: tipodireccion;
     end;
 
     ptrnodo = ^nodo;
@@ -114,12 +114,41 @@ end;
 
 procedure LiberarLista(var Lista: ptrnodo);
 
+var
+    aux: ptrnodo;
+
 begin
+    while (Lista <> nil) do begin
+        aux := Lista;
+        Lista := Lista^.sig;
+        dispose(aux);
+    end;
 end;
 
 procedure InsertarOrdenado(var Lista: ptrnodo; datos: paquete);
 
+var
+    ant, act, nodo: ptrnodo;
+
 begin
+    ant := nil;
+    act := Lista;
+
+    new(nodo);
+    nodo^.datos := datos;
+
+    while (act <> nil) and (act^.datos.direccion.numero < nodo^.datos.direccion.numero) do begin
+        ant := act;
+        act := act^.sig;
+    end;
+
+    if (ant = nil) then begin
+        nodo^.sig := Lista;
+        Lista := nodo;
+    end else begin
+        ant^.sig := nodo;
+        nodo^.sig := act;
+    end;
 end;
 
 procedure RecorrerLista(var Lista: ptrnodo);
