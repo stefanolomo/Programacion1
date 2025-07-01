@@ -1,5 +1,8 @@
 Program Ejercicio4;
 
+const
+    DIRECCIONESINTERESADAS = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+
 { Una empresa de la ciudad de La Plata, que realiza entregas de paquetes dentro del casco urbano, está interesada en procesar la información de sus paquetes. De cada paquete se conoce la fecha de envío, si pudo ser entregado al destinatario y la dirección que está compuesta por los campos: calle (de 1 a 122), número, piso y departamento. 
 
 Se dispone de una lista con los envíos del año pasado. Se requiere procesar la lista recorriéndola una sola vez para:
