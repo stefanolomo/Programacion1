@@ -76,11 +76,40 @@ end;
 
 function HallarMaxEnArrMes(var A: ArrMes): tipomes;
 
+var
+    i, max1: integer;
+    maxIn: tipomes;
+
 begin
+    max1 := -1;
+    maxIn := 1;
+
+    for i := 1 to 12 do begin
+        if (A[i] > max1) then begin
+            maxIn := i;
+            max1 := A[i];
+        end;
+    end;
+    HallarMaxEnArrMes := maxIn;
 end;
 
 function HallarMaxEnArrCalle(var A: ArrCalle): callesInteresadas;
+
+var
+    i, max1: integer;
+    maxIn: callesInteresadas;
+
 begin
+    max1 := -1;
+    maxIn := 10;
+
+    for i := 10 to 20 do begin
+        if (A[i] > max1) then begin
+            maxIn := i;
+            max1 := A[i];
+        end;
+    end;
+    HallarMaxEnArrCalle := maxIn;
 end;
 
 procedure LiberarLista(var Lista: ptrnodo);
