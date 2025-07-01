@@ -154,7 +154,16 @@ begin
     end;
 end;
 
-procedure RecorrerLista(var Lista: ptrnodo);
+procedure InformarArrCalle(A: ArrCalle);
+
+var
+    i: integer;
+
+begin
+    for i := 1 to 122 do begin
+        writeln('Para la calle ', i, ' se entregaron ', A[i], ' paquetes.');
+    end;
+end;
 
 { Se dispone de una lista con los envíos del año pasado. Se requiere procesar la lista recorriéndola una sola vez para:
 
