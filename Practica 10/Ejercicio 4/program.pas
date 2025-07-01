@@ -106,7 +106,7 @@ begin
     max1 := -1;
     maxIn := 10;
 
-    for i := 10 to 20 do begin
+    for i := 1 to 122 do begin
         if (A[i] > max1) then begin
             maxIn := i;
             max1 := A[i];
@@ -217,6 +217,7 @@ begin
     writeln('>> El mes en el que se entregaron mas paquetes es: ', HallarMaxEnArrMes(FrecuenciaMes));
     writeln('>> La calle que mas paquetes recibio es: ', HallarMaxEnArrCalle(FrecuenciaCalle));
     writeln('>> Para cada calle se entregaron: ');
+    InformarArrCalle(FrecuenciaCalle);
 end;
 
 var
@@ -233,6 +234,6 @@ begin
 
     LiberarLista(ListaEnvios);
 
-    for i := 1 to 122 do
+    for i := 10 to 20 do
         LiberarLista(ArrListasCalles[i]);
 end.
