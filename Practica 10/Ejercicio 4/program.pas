@@ -165,6 +165,8 @@ begin
     end;
 end;
 
+procedure RecorrerLista(var Lista: ptrnodo; var ListaCalles: ArrListas);
+
 { Se dispone de una lista con los envíos del año pasado. Se requiere procesar la lista recorriéndola una sola vez para:
 
 a. Informar la cantidad de envíos realizados para cada calle.
@@ -175,8 +177,46 @@ c. Eliminar de la lista de envíos, aquellos que no fueron entregados al destina
 
 d. Generar 10 nuevas listas con los envíos de las calles 10 a la 20. Cada lista debe estar ordenada por el número de la dirección. }
 
+var
+    FrecuenciaCalle: ArrCalle;
+    FrecuenciaMes: ArrMes;
+    act, ant, aux: ptrnodo;
+
 begin
-    
+    ant := nil;
+    act := Lista;
+
+    InicializarTipoArrCalle(FrecuenciaCalle);
+    InicializarTipoArrMes(FrecuenciaMes);
+    InicializarTipoArrListas(ListaCalles);
+
+    while (act <> nil) do begin
+        if (act^.datos.entregado) then begin
+            FrecuenciaCalle[act^.datos.direccion.calle] := FrecuenciaCalle[act^.datos.direccion.calle] + 1;
+            FrecuenciaMes[act^.datos.fecha.mes] := FrecuenciaMes[act^.datos.fecha.mes] + 1;
+
+            if (act^.datos.direccion.calle in DIRECCIONESINTERESADAS) then
+                InsertarOrdenado(ListaCalles[act^.datos.direccion.calle], act^.datos);
+
+            ant := act;
+            act := act^.sig;
+        end else begin
+            aux := act;
+            act := act^.sig;
+
+            if (ant = nil) then begin
+                Lista := act;
+            end else begin
+                ant^.sig := act;
+            end;
+
+            dispose(aux);
+        end;
+    end;
+
+    writeln('>> El mes en el que se entregaron mas paquetes es: ', HallarMaxEnArrMes(FrecuenciaMes));
+    writeln('>> La calle que mas paquetes recibio es: ', HallarMaxEnArrCalle(FrecuenciaCalle));
+    writeln('>> Para cada calle se entregaron: ');
 end;
 
 begin
