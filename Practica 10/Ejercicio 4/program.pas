@@ -153,6 +153,16 @@ end;
 
 procedure RecorrerLista(var Lista: ptrnodo);
 
+{ Se dispone de una lista con los envíos del año pasado. Se requiere procesar la lista recorriéndola una sola vez para:
+
+a. Informar la cantidad de envíos realizados para cada calle.
+
+b. Informar el nombre del mes con mayor cantidad de paquetes enviados.
+
+c. Eliminar de la lista de envíos, aquellos que no fueron entregados al destinatario.
+
+d. Generar 10 nuevas listas con los envíos de las calles 10 a la 20. Cada lista debe estar ordenada por el número de la dirección. }
+
 begin
     
 end;
