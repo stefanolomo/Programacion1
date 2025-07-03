@@ -26,7 +26,6 @@ type
 { La partida consiste de 10 rondas donde en cada una de las rondas los 2 jugadores eligen una celda del tablero. Las celdas elegidas en cada ronda se analizan y obtiene un punto el jugador que eligió la celda que contiene el mayor número. En caso de que ambos jugadores hayan, en una ronda, elegido una celda que contiene el mismo número ninguno suma puntos. 
 
 # Casos
-
     1. Jugadores eligieron diferentes celdas validas
         Se suma 1pt a el jugador con la celda de mayor nro
     2. Jugadores eligieron la misma celda / celdas del mismo valor / o celdas ya usadas
@@ -88,6 +87,14 @@ var
     jugador1fila, jugador1columna, jugador2fila, jugador2columna: tipofc;
 
 begin
+
+{ # Casos
+    1. Jugadores eligieron diferentes celdas validas
+        Se suma 1pt a el jugador con la celda de mayor nro
+    2. Jugadores eligieron la misma celda / celdas del mismo valor / o celdas ya usadas
+        No suman nada
+    3. 1 Jugador eligio una celda que ya fue usada y el otro una valida
+        Imprimir perdida de ronda y se suma 1 al que eligio la valida }
     
 end;
 
