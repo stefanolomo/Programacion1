@@ -140,7 +140,40 @@ var
         Imprimir perdida de ronda y se suma 1 al que eligio la valida }
 
 begin
+    puntaje1 := 0;
+    puntaje2 := 0;
 
+    repeat
+        LeerJugadas(jugador1fila, jugador1columna, jugador2fila, jugador2columna);
+
+        caso := DeterminarCaso(Tablero, jugador1fila, jugador1columna, jugador2fila, jugador2columna);
+
+        Tablero[jugador1fila, jugador1columna].utilizado := True;
+        Tablero[jugador2fila, jugador2columna].utilizado := True;
+
+        if caso = 1 then begin
+            puntaje1 := puntaje1 + 1;
+            writeln('[JUEGO] >> El jugador 1 gano la ronda!');
+        end else if caso = 2 then begin
+            puntaje2 := puntaje2 + 1;
+            writeln('[JUEGO] >> El jugador 2 gano la ronda!');
+        end else if caso = 3 then
+            writeln('[JUEGO] >> La ronda es un empate!');
+
+        writeln('---------------o---------------');
+        writeln('Quiere segir jugando? s/n');
+        readln(seguir);
+    until (seguir = 'n');
+
+    writeln('*************** FIN DE JUEGO ***************');
+
+    ReportarPuntaje(puntaje1, puntaje2);
+    if (puntaje1 > puntaje2) then
+        writeln('[FIN DE JUEGO] >> El ganador del juego es el jugador 1')
+    else if (puntaje2 > puntaje1) then
+        writeln('[FIN DE JUEGO] >> El ganador del juego es el jugador 2')
+    else
+        writeln('[FIN DE JUEGO] >> Los jugadores llegaron a un empate');
 end;
 
 begin
