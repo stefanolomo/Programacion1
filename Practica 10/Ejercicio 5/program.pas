@@ -56,10 +56,10 @@ end;
 procedure InicializarTableroConLista(listaval: ptrnodo; var Tablero: ArrTablero);
 
 begin
-    InicializarArrTableroCero(Tablero);
+    InicializarArrTablero(Tablero);
 
     while (listaval <> nil) do begin
-        Tablero[listaval^.datos.fila, listaval^.datos.columna].numero := listaval^.datos.numero;
+        Tablero[listaval^.datos.fila, listaval^.datos.fila].numero := listaval^.datos.numero;
 
         listaval := listaval^.sig;
     end;
@@ -86,16 +86,16 @@ procedure SimularJuego (var Tablero: ArrTablero);
 var
     jugador1fila, jugador1columna, jugador2fila, jugador2columna: tipofc;
 
+{ # Casos
+    - Jugadores eligieron diferentes celdas validas
+        Se suma 1pt a el jugador con la celda de mayor nro
+    - Jugadores eligieron la misma celda / celdas del mismo valor / o celdas ya usadas
+        No suman nada
+    - 1 Jugador eligio una celda que ya fue usada y el otro una valida
+        Imprimir perdida de ronda y se suma 1 al que eligio la valida }
+
 begin
 
-{ # Casos
-    1. Jugadores eligieron diferentes celdas validas
-        Se suma 1pt a el jugador con la celda de mayor nro
-    2. Jugadores eligieron la misma celda / celdas del mismo valor / o celdas ya usadas
-        No suman nada
-    3. 1 Jugador eligio una celda que ya fue usada y el otro una valida
-        Imprimir perdida de ronda y se suma 1 al que eligio la valida }
-    
 end;
 
 begin
