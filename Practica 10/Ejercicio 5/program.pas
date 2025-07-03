@@ -119,6 +119,13 @@ begin
     DeterminarCaso := caso;
 end;
 
+procedure ReportarPuntaje(p1, p2: integer);
+
+begin
+    writeln('[REPORTE PUNTAJE] >> Jugador 1: ', p1);
+    writeln('[REPORTE PUNTAJE] >> Jugador 2: ', p2);
+end;
+
 procedure SimularJuego (var Tablero: ArrTablero);
 
 var
