@@ -56,10 +56,10 @@ end;
 procedure InicializarTableroConLista(listaval: ptrnodo; var Tablero: ArrTablero);
 
 begin
-    InicializarArrTablero(Tablero);
+    InicializarArrTableroCero(Tablero);
 
     while (listaval <> nil) do begin
-        Tablero[listaval^.datos.fila, listaval^.datos.fila].numero := listaval^.datos.numero;
+        Tablero[listaval^.datos.fila, listaval^.datos.columna].numero := listaval^.datos.numero;
 
         listaval := listaval^.sig;
     end;
