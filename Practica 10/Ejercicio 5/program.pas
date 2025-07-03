@@ -130,6 +130,9 @@ procedure SimularJuego (var Tablero: ArrTablero);
 
 var
     jugador1fila, jugador1columna, jugador2fila, jugador2columna: tipofc;
+    caso: tipocaso;
+    puntaje1, puntaje2: integer;
+    seguir: char;
 
 { # Casos
     - Jugadores eligieron diferentes celdas validas
