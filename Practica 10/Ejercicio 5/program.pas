@@ -22,6 +22,8 @@ type
     end;
 
     ArrTablero = Array[tipofc, tipofc] of casillero;
+    
+    tipocaso = 1..3;
 
 { La partida consiste de 10 rondas donde en cada una de las rondas los 2 jugadores eligen una celda del tablero. Las celdas elegidas en cada ronda se analizan y obtiene un punto el jugador que eligió la celda que contiene el mayor número. En caso de que ambos jugadores hayan, en una ronda, elegido una celda que contiene el mismo número ninguno suma puntos. 
 
@@ -56,10 +58,10 @@ end;
 procedure InicializarTableroConLista(listaval: ptrnodo; var Tablero: ArrTablero);
 
 begin
-    InicializarArrTablero(Tablero);
+    InicializarArrTableroCero(Tablero);
 
     while (listaval <> nil) do begin
-        Tablero[listaval^.datos.fila, listaval^.datos.fila].numero := listaval^.datos.numero;
+        Tablero[listaval^.datos.fila, listaval^.datos.columna].numero := listaval^.datos.numero;
 
         listaval := listaval^.sig;
     end;
@@ -79,6 +81,42 @@ begin
     readln(i2);
     writeln('Elija la columna: ');
     readln(j2);
+end;
+
+function DeterminarCaso(Tablero: ArrTablero; i1, j1, i2, j2: tipofc): tipocaso;
+
+var
+    num1, num2: tipocasillero;
+    jugada1valida, jugada2valida: boolean;
+    caso: tipocaso;
+
+begin
+    num1 := Tablero[i1, j1].numero;
+    num2 := Tablero[i2, j2].numero;
+
+    jugada1valida := not Tablero[i1, j1].utilizado;
+    jugada2valida := not Tablero[i2, j2].utilizado;
+
+    if (not jugada1valida) and jugada2valida then
+        caso := 2
+    else if (not jugada2valida) and jugada1valida then
+        caso := 1
+    else if (not jugada1valida) and (not jugada2valida) then
+        caso := 3
+    else if (i1 = i2) and (j1 = j2) then
+        caso := 3
+    else if num1 = num2 then
+        caso := 3
+    else if num1 > num2 then
+        caso := 1
+    else
+        caso := 2;
+
+    { Casos de la funcion:
+    1: Gano el jugador 1;
+    2: Gano el jugador 2;
+    3: No se suma a ninguno }
+    DeterminarCaso := caso;
 end;
 
 procedure SimularJuego (var Tablero: ArrTablero);
