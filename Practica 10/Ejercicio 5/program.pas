@@ -176,5 +176,11 @@ begin
         writeln('[FIN DE JUEGO] >> Los jugadores llegaron a un empate');
 end;
 
+var
+    T: ArrTablero;
+    ListaValores: ptrnodo;
 begin
+    // CargarListaValores(ListaValores) -> se dispone
+    InicializarTableroConLista(ListaValores, T); { o podés inicializar con lista si la tenés }
+    SimularJuego(T);
 end.
