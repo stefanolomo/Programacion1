@@ -4,7 +4,7 @@ program gas;
 
 // Se dispone de una lista con la información anterior y de una estructura que se accede por categoría de consumo al nombre de esta. Procesar la lista de facturas recorriéndola una sola vez para:
 
-// B. Separar la lista por las 3 condiciones, ordenándolas por código de cliente:
+// A. Separar la lista por las 3 condiciones, ordenándolas por código de cliente:
 // [Sin revisión]: facturas cuyo monto es menor que el promedio del año anterior.
 // [Revisión]: facturas cuyo monto es mayor que el promedio del año anterior y tiene más de 1000 m3 consumidos.
 // [Refacturación]: facturas cuyo monto es mayor que el promedio del año anterior y tiene menos de 1000 m3 consumidos.
@@ -50,7 +50,7 @@ begin
     ant := nil;
     act := Lista;
 
-    while (Lista <> nil) and (Lista^.datos.codigo <= nodo^.datos.codigo) do begin
+    while (act <> nil) and (act^.datos.codigo <= nodo^.datos.codigo) do begin
         ant := act;
         act := act^.sig;
     end;
