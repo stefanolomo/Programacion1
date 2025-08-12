@@ -26,3 +26,40 @@ type
         datos: factura;
         sig: ptrnodo;
     end;
+
+procedure InicializarArrMontos(var V: arrMontos);
+
+var
+    i: integer;
+
+begin
+    for i := 1 to 12 do begin
+        V[i] := 0;
+    end;
+end;
+
+procedure InsertarOrdenado(var Lista: ptrnodo; datos: factura);
+
+var
+    ant, act, nodo: ptrnodo;
+
+begin
+    new(nodo);
+    nodo^.datos := datos;
+
+    ant := nil;
+    act := Lista;
+
+    while (Lista <> nil) and (Lista^.datos.codigo <= nodo^.datos.codigo) do begin
+        ant := act;
+        act := act^.sig;
+    end;
+
+    if (ant = nil) then begin
+        nodo^.sig := Lista;
+        Lista := nodo;
+    end else begin
+        ant^.sig := nodo;
+        nodo^.sig := act;
+    end;
+end;
