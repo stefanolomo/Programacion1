@@ -105,3 +105,43 @@ begin
     else
         CalcularPromedioArrMontos := 0;
 end;
+
+procedure RecorrerLista(Lista: ptrnodo; var Lista1, Lista2, Lista3: ptrnodo);
+
+var
+    ArregloConsumoCategoria: arrCat;
+    act: ptrnodo;
+    promedio: integer;
+
+begin
+    InicializarArrCat(ArregloConsumoCategoria);
+
+    Lista1 := nil;
+    Lista2 := nil;
+    Lista3 := nil;
+
+    act := Lista;
+
+    while (act <> nil) do begin
+        ArregloConsumoCategoria[act^.datos.categoria] := ArregloConsumoCategoria[act^.datos.categoria] + act^.datos.m3;
+
+        promedio := CalcularPromedioArrMontos(act^.datos.montos);
+
+        if (act^.datos.monto <= promedio) then
+            InsertarOrdenado(Lista1, act^.datos)
+        else if (act^.datos.monto > promedio) then begin
+            if (act^.datos.m3 > 1000) then
+                InsertarOrdenado(Lista2, act^.datos)
+            else if (act^.datos.m3 <= 1000) then
+                InsertarOrdenado(Lista3, act^.datos)
+        end;
+
+        act := act^.sig;
+    end;
+
+    InformarArrCat(ArregloConsumoCategoria);
+end;
+
+begin
+    
+end.
