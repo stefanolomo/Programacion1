@@ -27,6 +27,19 @@ type
         sig: ptrnodo;
     end;
 
+    arrCat = Array[1..10] of integer;
+
+procedure InicializarArrCat(var V: arrCat);
+
+var
+    i: integer;
+
+begin
+    for i := 1 to 10 do begin
+        V[i] := 0;
+    end;
+end;
+
 procedure InicializarArrMontos(var V: arrMontos);
 
 var
