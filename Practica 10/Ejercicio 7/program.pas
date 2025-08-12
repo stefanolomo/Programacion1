@@ -76,3 +76,21 @@ begin
         nodo^.sig := act;
     end;
 end;
+
+function CalcularPromedioArrMontos(V: arrMontos):real;
+
+var
+    i, sum: integer;
+
+begin
+    sum := 0;
+
+    for i := 1 to 12 do begin
+        sum := sum + V[i];
+    end;
+
+    if (sum <> 0) then
+        CalcularPromedioArrMontos := sum / 12
+    else
+        CalcularPromedioArrMontos := 0;
+end;
