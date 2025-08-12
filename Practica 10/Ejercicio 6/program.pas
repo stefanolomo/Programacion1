@@ -12,12 +12,12 @@ type
     codCurso = 1..10;
 
     persona = record
-        DNI, edad: integer;
+        DNI, edad: longint;
         apellido, nombre: tipocadena;
         codigo: codCurso;
     end;
 
-    ArrCurso = Array[1..10] of integer;
+    ArrCurso = Array[1..10] of longint;
 
 procedure LeerDatos(var datos: persona);
 
@@ -48,7 +48,7 @@ end;
 procedure InicializarArrCurso(var V: ArrCurso);
 
 var
-    i: integer;
+    i: longint;
 
 begin
     for i := 1 to 10 do begin
@@ -59,7 +59,7 @@ end;
 procedure InformarCupos(capacidad, maximo: ArrCurso);
 
 var
-    i: integer;
+    i: longint;
 
 begin
     for i := 1 to 10 do begin
@@ -71,7 +71,7 @@ end;
 procedure SetearCupos(var maximo: ArrCurso);
 
 var
-    i: integer;
+    i: longint;
 
 begin
     for i := 1 to 10 do begin
@@ -83,7 +83,7 @@ end;
 procedure Inscripciones(MaximoCursos: ArrCurso);
 
 var
-    estudiantesCumplen: integer;
+    estudiantesCumplen: longint;
     Estudiante: persona;
     CapacidadActualCursos: ArrCurso;
 
