@@ -88,7 +88,7 @@ begin
     end;
 end;
 
-function CalcularPromedioArrMontos(V: arrMontos):real;
+function CalcularPromedioArrMontos(V: arrMontos): integer;
 
 var
     i, sum: integer;
@@ -101,7 +101,7 @@ begin
     end;
 
     if (sum <> 0) then
-        CalcularPromedioArrMontos := sum / 12
+        CalcularPromedioArrMontos := sum div 12
     else
         CalcularPromedioArrMontos := 0;
 end;
