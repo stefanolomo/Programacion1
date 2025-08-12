@@ -40,6 +40,17 @@ begin
     end;
 end;
 
+procedure InformarArrCat(V: arrCat);
+
+var
+    i: integer;
+
+begin
+    for i := 1 to 10 do begin
+        writeln('Para la categoria ', i, ' se consumieron ', V[i], 'm3 de gas.')
+    end;
+end;
+
 procedure InicializarArrMontos(var V: arrMontos);
 
 var
